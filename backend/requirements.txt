@@ -1,0 +1,12 @@
+SQLAlchemy
+fastapi
+beautifulsoup4 
+psycopg2-binary 
+python-dotenv
+request 
+firebase-admin
+passlib[bcrypt] 
+python-jose[cryptography]
+uvicorn
+pydantic[email]
+apscheduler
