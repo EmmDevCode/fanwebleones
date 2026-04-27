@@ -1,0 +1,185 @@
+/* src/components/LiveScoreCard.css */
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Outfit:wght@400;600;700;800&display=swap');
+
+.lsc-container {
+  background: linear-gradient(180deg, #18181b 0%, #09090b 100%);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  color: white;
+  width: 100%;
+  max-width: 380px;
+  overflow: hidden;
+  font-family: 'Outfit', sans-serif;
+}
+
+.lsc-scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 16px 24px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.lsc-team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.lsc-logo-wrapper {
+  width: 60px;
+  height: 60px;
+  background: #1c1c1e;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.05);
+}
+
+.lsc-logo-wrapper.local {
+  background: #ffffff;
+}
+
+.lsc-team-slug {
+  font-family: 'Teko', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #a1a1aa;
+}
+
+.lsc-logo-wrapper.local .lsc-team-slug {
+  color: #09090b;
+}
+
+.lsc-score {
+  font-family: 'Teko', sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.lsc-inning-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lsc-inning-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 214, 10, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 214, 10, 0.2);
+}
+
+.lsc-arrow {
+  color: #ffd60a;
+  font-size: 16px;
+}
+
+.lsc-inning-num {
+  font-family: 'Teko', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #ffd60a;
+  line-height: 1;
+}
+
+.lsc-stats-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.lsc-count {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lsc-count-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lsc-count-label {
+  font-family: 'Teko', sans-serif;
+  font-size: 18px;
+  color: #71717a;
+  line-height: 1;
+  width: 14px;
+}
+
+.lsc-leds {
+  display: flex;
+  gap: 5px;
+}
+
+.lsc-led {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #27272a;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  transition: all 0.2s ease;
+}
+
+.lsc-led.ball.on { background: #32d74b; box-shadow: 0 0 10px #32d74b; }
+.lsc-led.strike.on { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
+.lsc-led.out.on { background: #ff9f0a; box-shadow: 0 0 10px #ff9f0a; }
+
+/* Diamante Minimalista Realista */
+.lsc-diamond-container {
+  width: 50px;
+  height: 50px;
+  perspective: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lsc-diamond {
+  position: relative;
+  width: 34px;
+  height: 34px;
+  transform: rotateX(55deg) rotateZ(45deg);
+  transform-style: preserve-3d;
+}
+
+.lsc-dirt {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border: 2px solid #8B5A2B;
+  box-shadow: inset 0 0 4px rgba(139, 90, 43, 0.5);
+}
+
+.lsc-base {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #e4e4e7;
+  border: 1px solid #71717a;
+  transform: translateZ(2px);
+  transition: all 0.3s;
+}
+
+.lsc-base.active {
+  background: #ffd60a;
+  border-color: #ff9f0a;
+  box-shadow: 0 0 10px #ffd60a;
+  transform: translateZ(5px) scale(1.2);
+}
+
+.lsc-1b { bottom: -2px; right: -5px; }
+.lsc-2b { top: -5px; right: -5px; }
+.lsc-3b { top: -5px; left: -2px; }

@@ -1,4 +1,3 @@
-// src/pages/Login.tsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -36,44 +35,52 @@ const Login: React.FC = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-header">
-        <h1 className="auth-title">Bienvenido</h1>
-        <p className="auth-subtitle">Inicia sesión para seguir a los Leones.</p>
-      </div>
-
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="form-label">Correo Electrónico</label>
-          <input 
-            type="email" 
-            className="auth-input" 
-            placeholder="ejemplo@correo.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+      <div className="auth-bg-glow"></div>
+      
+      <div className="auth-card">
+        <div className="auth-header">
+          <div className="auth-logo-wrapper">
+             {/* Un ícono o logo placeholder */}
+             <div className="auth-logo">🦁</div>
+          </div>
+          <h1 className="auth-title">Bienvenido</h1>
+          <p className="auth-subtitle">Inicia sesión para seguir a los Leones.</p>
         </div>
 
-        <div className="form-group">
-          <label className="form-label">Contraseña</label>
-          <input 
-            type="password" 
-            className="auth-input" 
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <form className="auth-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label className="form-label">Correo Electrónico</label>
+            <input 
+              type="email" 
+              className="auth-input" 
+              placeholder="ejemplo@correo.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Contraseña</label>
+            <input 
+              type="password" 
+              className="auth-input" 
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="auth-btn-primary">
+            Entrar
+          </button>
+        </form>
+
+        <div className="auth-footer">
+          <span className="auth-footer-text">¿No tienes cuenta?</span>
+          <Link to="/registro" className="auth-link">Regístrate</Link>
         </div>
-
-        <button type="submit" className="auth-btn-primary">
-          Entrar
-        </button>
-      </form>
-
-      <div className="auth-footer">
-        ¿No tienes cuenta? 
-        <Link to="/registro" className="auth-link">Regístrate</Link>
       </div>
     </div>
   );

@@ -1,39 +1,182 @@
 /* src/pages/Inicio.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,600;0,700;0,800;1,800&display=swap');
 
 .inicio-container {
-  padding: 24px 20px;
-  background-color: #000000;
-  min-height: 100vh;
-  /* Tipografía nativa de Apple/Sistemas modernos */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: #ffffff;
+  /* PWA Optimizations: Pegado más arriba para aprovechar espacio */
+  padding: max(16px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
+  background-color: #09090b; /* Zinc 950 */
+  min-height: 100dvh;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #fafafa;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent; /* Remove blue tap highlight on mobile */
+  z-index: 1;
 }
 
-.inicio-header {
-  margin-bottom: 32px;
+/* Premium ambient glow effect in the background */
+.inicio-bg-glow {
+  position: fixed;
+  top: -15%;
+  right: -15%;
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(circle, rgba(0, 168, 89, 0.12) 0%, rgba(0,0,0,0) 70%); /* Leones Green Glow */
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(80px);
+  animation: pulse-glow 8s ease-in-out infinite alternate;
+  pointer-events: none;
 }
 
-.header-title {
-  font-size: 32px;
+.inicio-bg-glow::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: -40%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(234, 179, 8, 0.08) 0%, rgba(0,0,0,0) 70%); /* Yellowish Glow */
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+@keyframes pulse-glow {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+/* ==================================================
+   LETRERO LED ESTADIO (JUMBOTRON) - TAMAÑO COMPACTO
+   ================================================== */
+.led-stadium-header {
+  width: 100%;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 2;
+  background: #18181b; /* Zinc 900: El marco del letrero */
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #27272a;
+  box-shadow: 0 5px 15px rgba(0, 168, 89, 0.15), inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+.led-board {
+  position: relative;
+  background-color: #050505; /* Fondo negro profundo */
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  
+  /* Textura de matriz de puntos LED */
+  background-image: 
+    radial-gradient(rgba(0, 168, 89, 0.15) 1px, transparent 1px),
+    radial-gradient(rgba(0, 168, 89, 0.15) 1px, transparent 1px);
+  background-size: 4px 4px;
+  background-position: 0 0, 2px 2px;
+}
+
+.led-marquee {
+  display: flex;
+  white-space: nowrap;
+  padding-left: 100%; /* Empieza escondido a la derecha */
+  animation: marquee-scroll 12s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.led-text {
+  font-family: 'Teko', sans-serif;
+  font-size: 34px;
+  line-height: 1;
   font-weight: 700;
+  color: #10b981; /* Verde esmeralda LED */
   margin: 0;
-  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  display: inline-block;
+  padding-right: 40px;
+  
+  /* Efecto de brillo de luz LED */
+  text-shadow: 
+    0 0 5px #10b981, 
+    0 0 10px #059669, 
+    0 0 20px #047857,
+    0 0 30px rgba(0, 168, 89, 0.4);
+    
+  /* Parpadeo sutil realista */
+  animation: led-flicker 5s infinite alternate;
+  position: relative;
+  z-index: 2;
 }
 
-.header-subtitle {
-  color: #8e8e93;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  margin-top: 6px;
-  display: block;
+.led-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.08), transparent);
+  animation: scanline 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-50px); }
+  100% { transform: translateY(150px); }
+}
+
+@keyframes led-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 0 0 5px #10b981, 0 0 15px #059669, 0 0 30px #047857;
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+    opacity: 0.8;
+  }
 }
 
 .section-container {
-  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  position: relative;
+  z-index: 2;
 }
 
+.widget-wrapper {
+  animation: fade-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.standings-wrapper {
+  animation: fade-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+@keyframes fade-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==================================================
+   LEGACY / FALLBACK STYLES (En caso de que algún hijo los use)
+   ================================================== */
 .section-title {
   font-size: 20px;
   font-weight: 600;
@@ -41,7 +184,6 @@
   margin-top: 0;
 }
 
-/* Estado de carga y errores */
 .loading-container, .error-container {
   background-color: #1c1c1e;
   border-radius: 24px;
@@ -66,7 +208,7 @@
 }
 
 .error-text {
-  color: #ff453a; /* Rojo iOS oscuro */
+  color: #ff453a;
   font-size: 14px;
   font-weight: 500;
 }
@@ -75,7 +217,6 @@
   to { transform: rotate(360deg); }
 }
 
-/* Tarjetas de Accesos Rápidos */
 .accesos-grid {
   display: flex;
   gap: 12px;
@@ -108,4 +249,56 @@
 .acceso-label {
   font-size: 13px;
   font-weight: 500;
+}
+
+/* ==================================================
+   FOOTER PREMIUM
+   ================================================== */
+.inicio-footer {
+  margin-top: 56px;
+  padding-bottom: 60px; /* Espacio extra para la barra de navegación inferior */
+  padding-inline: 16px;
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  animation: fade-slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.footer-disclaimer {
+  color: #71717a; /* Zinc 500 */
+  font-size: 11.5px;
+  line-height: 1.6;
+  margin: 0;
+  text-align: center;
+}
+
+.footer-divider {
+  width: 24px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 16px auto;
+  border-radius: 2px;
+}
+
+.footer-signature {
+  color: #a1a1aa; /* Zinc 400 */
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.signature-link {
+  color: #00A859;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.signature-link:hover {
+  color: #10b981;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+  text-decoration: underline;
 }

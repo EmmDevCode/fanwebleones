@@ -1,5 +1,6 @@
 import React from 'react';
 import type { JuegoEnVivo } from '@/types';
+import './LiveScoreCard.css';
 
 interface LiveScoreCardProps {
   juego: JuegoEnVivo;
@@ -20,55 +21,70 @@ const LiveScoreCard: React.FC<LiveScoreCardProps> = ({ juego }) => {
     corredor_3b
   } = juego;
 
+  const esAlta = (inning_actual || "").toLowerCase().includes("alta");
+  const inningNum = (inning_actual || "").replace(/[^0-9]/g, '') || "1";
+
   return (
-    <div className="bg-black text-white p-6 rounded-[2rem] border border-[#1c1c1e] w-full max-w-sm font-sans shadow-2xl tracking-wide">
-      
-      {/* Cabecera: Estado y Conteo */}
-      <div className="flex justify-between items-center mb-6 px-1">
-        <div className="flex items-center space-x-2">
-          <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-          <span className="text-xs font-semibold uppercase text-gray-300">
-            {inning_actual}
-          </span>
-        </div>
-        <div className="flex space-x-3 text-xs font-medium text-gray-400">
-          <span>B <strong className="text-white">{bolas}</strong></span>
-          <span>S <strong className="text-white">{strikes}</strong></span>
-          <span>O <strong className="text-white">{outs}</strong></span>
-        </div>
-      </div>
-
-      {/* Marcador Principal */}
-      <div className="flex justify-between items-center mb-6">
-        {/* Visitante */}
-        <div className="flex flex-col items-center flex-1">
-          <div className="w-16 h-16 bg-[#1c1c1e] rounded-full flex items-center justify-center mb-3">
-            <span className="text-xl font-bold text-white">{visitante.slug}</span>
+    <div className="lsc-container">
+      {/* Marcador Superior */}
+      <div className="lsc-scoreboard">
+        <div className="lsc-team">
+          <div className="lsc-logo-wrapper">
+             <span className="lsc-team-slug">{visitante.slug}</span>
           </div>
-          <span className="text-4xl font-light tabular-nums">{score_visitante}</span>
+          <span className="lsc-score">{score_visitante}</span>
         </div>
 
-        {/* Separador */}
-        <div className="text-[#3a3a3c] font-medium text-sm px-4">VS</div>
-
-        {/* Local (Leones) */}
-        <div className="flex flex-col items-center flex-1">
-          <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-3">
-             <span className="text-xl font-bold text-black">{local.slug}</span>
+        <div className="lsc-inning-center">
+          <div className="lsc-inning-indicator">
+            <span className="lsc-arrow">{esAlta ? "▲" : "▼"}</span>
+            <span className="lsc-inning-num">{inningNum}</span>
           </div>
-          <span className="text-4xl font-bold tabular-nums">{score_local}</span>
+        </div>
+
+        <div className="lsc-team local">
+          <span className="lsc-score">{score_local}</span>
+          <div className="lsc-logo-wrapper local">
+             <span className="lsc-team-slug">{local.slug}</span>
+          </div>
         </div>
       </div>
 
-      {/* Mini Diamante (Opcional, representación minimalista de bases) */}
-      <div className="flex justify-center mt-4 pt-4 border-t border-[#1c1c1e]">
-        <div className="relative w-8 h-8 rotate-45">
-          <div className={`absolute top-0 right-0 w-3 h-3 rounded-sm ${corredor_1b ? 'bg-white' : 'bg-[#1c1c1e]'}`}></div>
-          <div className={`absolute top-0 left-0 w-3 h-3 rounded-sm ${corredor_2b ? 'bg-white' : 'bg-[#1c1c1e]'}`}></div>
-          <div className={`absolute bottom-0 left-0 w-3 h-3 rounded-sm ${corredor_3b ? 'bg-white' : 'bg-[#1c1c1e]'}`}></div>
+      {/* Stats Inferiores (Diamante y Cuenta) */}
+      <div className="lsc-stats-bar">
+        
+        <div className="lsc-count">
+          <div className="lsc-count-item">
+            <span className="lsc-count-label">B</span>
+            <div className="lsc-leds">
+              {[1, 2, 3, 4].map(i => <div key={i} className={`lsc-led ball ${i <= bolas ? 'on' : ''}`}></div>)}
+            </div>
+          </div>
+          <div className="lsc-count-item">
+            <span className="lsc-count-label">S</span>
+            <div className="lsc-leds">
+              {[1, 2, 3].map(i => <div key={i} className={`lsc-led strike ${i <= strikes ? 'on' : ''}`}></div>)}
+            </div>
+          </div>
+          <div className="lsc-count-item">
+            <span className="lsc-count-label">O</span>
+            <div className="lsc-leds">
+              {[1, 2, 3].map(i => <div key={i} className={`lsc-led out ${i <= outs ? 'on' : ''}`}></div>)}
+            </div>
+          </div>
         </div>
-      </div>
 
+        {/* Diamante 3D Minimalista */}
+        <div className="lsc-diamond-container">
+          <div className="lsc-diamond">
+            <div className="lsc-dirt"></div>
+            <div className={`lsc-base lsc-2b ${corredor_2b ? 'active' : ''}`}></div>
+            <div className={`lsc-base lsc-3b ${corredor_3b ? 'active' : ''}`}></div>
+            <div className={`lsc-base lsc-1b ${corredor_1b ? 'active' : ''}`}></div>
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 };

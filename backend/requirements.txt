@@ -3,7 +3,7 @@ fastapi
 beautifulsoup4 
 psycopg2-binary 
 python-dotenv
-request 
+requests 
 firebase-admin
 passlib[bcrypt] 
 python-jose[cryptography]

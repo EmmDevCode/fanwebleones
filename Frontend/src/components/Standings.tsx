@@ -19,8 +19,19 @@ const Standings: React.FC = () => {
       });
   }, []);
 
-  if (loading) return <div className="standings-loading text-center p-4">Sincronizando posiciones... 📊</div>;
-  if (!posiciones || posiciones.error) return <div className="standings-error text-center p-4">No hay datos disponibles.</div>;
+  if (loading) return (
+    <div className="standings-container loading-state">
+      <div className="spinner"></div>
+      <span>Sincronizando posiciones...</span>
+    </div>
+  );
+
+  if (!posiciones || posiciones.error) return (
+    <div className="standings-container error-state">
+      <div className="error-icon">⚠️</div>
+      <span>No hay datos disponibles en este momento.</span>
+    </div>
+  );
 
   const equiposMostrar = posiciones[zonaActiva] || [];
 
@@ -40,21 +51,24 @@ const Standings: React.FC = () => {
 
   return (
     <div className="standings-container">
-      <h2 className="standings-title">Posiciones</h2>
+      <div className="standings-header">
+        <h2 className="standings-title">STANDING</h2>
+        <div className="season-badge">LMB 2026</div>
+      </div>
 
-      {/* Botones Fijos para las Zonas */}
+      {/* Selector tipo Segmented Control de iOS */}
       <div className="zone-selector">
         <button 
           className={`zone-btn ${zonaActiva === "Zona Sur" ? "active" : ""}`}
           onClick={() => setZonaActiva("Zona Sur")}
         >
-          Zona Sur
+          <span className="zone-text">Zona Sur</span>
         </button>
         <button 
           className={`zone-btn ${zonaActiva === "Zona Norte" ? "active" : ""}`}
           onClick={() => setZonaActiva("Zona Norte")}
         >
-          Zona Norte
+          <span className="zone-text">Zona Norte</span>
         </button>
       </div>
 
@@ -62,12 +76,12 @@ const Standings: React.FC = () => {
         <table className="standings-table">
           <thead>
             <tr>
-              <th className="text-left">Equipo</th>
+              <th className="text-left col-equipo">EQUIPO</th>
               <th>G</th>
               <th>P</th>
               <th>PCT</th>
               <th>JD</th>
-              <th>Racha</th>
+              <th>RACHA</th>
             </tr>
           </thead>
           <tbody>
@@ -88,11 +102,11 @@ const Standings: React.FC = () => {
                       {equipo.nombre.split(' de ')[0].replace(' del ', '')} 
                     </span>
                   </td>
-                  <td>{equipo.victorias}</td>
-                  <td>{equipo.derrotas}</td>
-                  <td>{equipo.pct}</td>
-                  <td>{equipo.jd}</td>
-                  <td>
+                  <td className="stat-cell">{equipo.victorias}</td>
+                  <td className="stat-cell">{equipo.derrotas}</td>
+                  <td className="stat-cell pct">{equipo.pct}</td>
+                  <td className="stat-cell">{equipo.jd}</td>
+                  <td className="stat-cell">
                     <span className={`streak-badge ${equipo.racha?.includes('W') ? 'win' : 'loss'}`}>
                       {equipo.racha}
                     </span>

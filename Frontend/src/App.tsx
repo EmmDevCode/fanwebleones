@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from '@/components/ui/Layout';
 import Inicio from '@/pages/Inicio';
@@ -10,11 +10,16 @@ import { AuthProvider } from '@/context/AuthContext';
 import Calendario from '@/pages/Calendario';
 import Equipo from '@/pages/Equipo';
 import Noticias from '@/pages/Noticias'; // Importamos Noticias
-
-
+import SplashScreen from '@/components/ui/SplashScreen';
 
 
 const App: React.FC = () => {
+  const [showSplash, setShowSplash] = useState(true);
+
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
+
   return (
     <AuthProvider>
       <BrowserRouter>
@@ -31,7 +36,7 @@ const App: React.FC = () => {
             <Route path="/noticias" element={<Noticias />} />
             {/* Rutas Protegidas (Solo usuarios logueados) */}
             <Route element={<ProtectedRoute />}>
-             <Route path="/perfil" element={<Perfil />} />
+              <Route path="/perfil" element={<Perfil />} />
             </Route>
           </Route>
         </Routes>

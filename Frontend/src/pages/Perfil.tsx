@@ -1,4 +1,3 @@
-// src/pages/Perfil.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useNotificaciones } from '@/hooks/useNotificaciones';
@@ -22,7 +21,11 @@ const Perfil: React.FC = () => {
 
   return (
     <div className="perfil-container">
-      <h1 className="perfil-header">Perfil</h1>
+      <div className="perfil-bg-glow"></div>
+      
+      <header className="perfil-header-container">
+        <h1 className="perfil-header">Perfil</h1>
+      </header>
 
       {/* Tarjeta de Información */}
       <div className="user-card">
@@ -34,35 +37,44 @@ const Perfil: React.FC = () => {
       </div>
 
       {/* Configuración */}
-      <h3 className="text-sm font-semibold text-[#8e8e93] uppercase tracking-wider mb-2 ml-4">
-        Preferencias
-      </h3>
-      <div className="settings-group">
-        <div className="settings-item">
-          <span className="settings-label">Notificar marcadores en vivo</span>
+      <div className="settings-section">
+        <h3 className="settings-title">Preferencias</h3>
+        <div className="settings-group">
           
-          {/* El Toggle Switch */}
-          <label className="toggle-switch">
-            <input 
-              type="checkbox" 
-              checked={notificacionesActivas}
-              onChange={toggleNotificaciones}
-            />
-            <span className="toggle-slider"></span>
-          </label>
-        </div>
-        
-        {/* Aquí podrías agregar más opciones en el futuro */}
-        <div className="settings-item">
-          <span className="settings-label">Equipo Favorito</span>
-          <span className="text-[#8e8e93] font-medium">Leones</span>
+          <div className="settings-item">
+            <div className="settings-label-wrapper">
+              <span className="settings-icon">🔔</span>
+              <span className="settings-label">Notificaciones en vivo</span>
+            </div>
+            
+            {/* El Toggle Switch Premium */}
+            <label className="toggle-switch">
+              <input 
+                type="checkbox" 
+                checked={notificacionesActivas}
+                onChange={toggleNotificaciones}
+              />
+              <span className="toggle-slider"></span>
+            </label>
+          </div>
+          
+          <div className="settings-item">
+            <div className="settings-label-wrapper">
+              <span className="settings-icon">⚾</span>
+              <span className="settings-label">Equipo Favorito</span>
+            </div>
+            <span className="settings-value">Leones</span>
+          </div>
         </div>
       </div>
 
       {/* Cerrar Sesión */}
-      <button className="logout-btn" onClick={handleLogout}>
-        Cerrar Sesión
-      </button>
+      <div className="logout-section">
+        <button className="logout-btn" onClick={handleLogout}>
+          <span className="logout-icon">↪</span>
+          Cerrar Sesión
+        </button>
+      </div>
     </div>
   );
 };

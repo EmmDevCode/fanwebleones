@@ -1,39 +1,51 @@
 /* src/components/ui/Layout.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
 
 .app-wrapper {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100%; /* Toma todo el ancho disponible */
-  background-color: #000000;
+  height: 100dvh; /* PWA: 100dvh fundamental para móviles */
+  width: 100%;
+  background-color: #09090b; /* Zinc 950 profundo */
   position: relative;
+  overflow: hidden; /* Evita que la página completa se mueva */
 }
 
 .main-content {
   flex: 1;
   overflow-y: auto;
-  /* Espacio extra para que la barra no tape el último elemento */
-  padding-bottom: 80px; 
+  overflow-x: hidden;
+  /* Espacio extra para que la barra no tape + soporte iPhone X/11/12/13/14/15 safe-areas */
+  padding-bottom: calc(90px + env(safe-area-inset-bottom)); 
   /* Estilos nativos para un scroll más suave en iOS */
   -webkit-overflow-scrolling: touch;
+  /* PWA: Evitar comportamientos indeseados como "pull-to-refresh" visual si no lo controlamos nosotros */
+  overscroll-behavior-y: none; 
 }
 
-/* La Barra de Navegación Inferior */
+/* La Barra de Navegación Inferior Estilo Premium */
 .bottom-navbar {
   position: fixed;
   bottom: 0;
-  width: 100%; /* Toma todo el ancho disponible */
-  height: 65px;
-  background-color: rgba(28, 28, 30, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-top: 1px solid #2c2c2e;
+  width: 100%;
+  height: calc(70px + env(safe-area-inset-bottom));
+  /* Glassmorphism deportivo */
+  background: rgba(9, 9, 11, 0.75); 
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  /* Soporte para la zona segura en iPhones */
+  align-items: flex-start; /* Alineamos arriba y usamos padding top */
+  padding-top: 12px;
   padding-bottom: env(safe-area-inset-bottom);
   z-index: 1000;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.6);
+  
+  /* PWA Optimizations */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav-item {
@@ -42,17 +54,16 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
-  color: #8e8e93; /* Gris inactivo */
+  color: #71717a; /* Zinc 500 - inactivo */
   width: 100%;
-  /* Limitamos un poco el ancho máximo de cada botón para que en PC no estén tan separados */
-  max-width: 150px; 
-  height: 100%;
-  transition: all 0.2s ease;
+  max-width: 100px; 
+  height: 45px;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
 .nav-item.active {
-  color: #ffffff; /* Blanco activo */
-  transform: scale(1.05);
+  color: #00A859; /* Verde Leones vibrante */
 }
 
 .nav-icon {
@@ -60,18 +71,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efecto resorte nativo */
 }
 
 .nav-item.active .nav-icon {
-  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+  transform: translateY(-4px) scale(1.15); /* Salto e incremento de tamaño sutil al activar */
+  filter: drop-shadow(0 0 12px rgba(0, 168, 89, 0.6)); /* Glow verde */
 }
 
 .nav-label {
-  font-size: 10px;
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  opacity: 0.7;
 }
 
 .nav-item.active .nav-label {
   font-weight: 700;
+  opacity: 1;
+  transform: translateY(2px);
+}
+
+/* Indicador dinámico debajo del icono activo */
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #00A859;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.nav-item.active::after {
+  opacity: 1;
+  transform: scale(1);
+  box-shadow: 0 0 10px #00A859;
 }
