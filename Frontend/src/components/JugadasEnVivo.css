@@ -1,0 +1,101 @@
+/* src/components/JugadasEnVivo.css */
+.play-by-play-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pbp-title {
+    color: #1a1a1a;
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.pbp-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.play-card {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 1rem;
+    animation: slide-down 0.4s ease-out;
+    /* Efecto de que la jugada "cae" nueva */
+}
+
+.play-left {
+    flex-shrink: 0;
+}
+
+.play-batter-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #f0f0f0;
+    border: 2px solid #ddd;
+}
+
+.play-right {
+    flex-grow: 1;
+}
+
+.play-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.play-count {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.play-badge {
+    background: #eef2f5;
+    color: #333;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    border: 1px solid #ddd;
+}
+
+.play-desc {
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.4;
+    margin: 5px 0;
+}
+
+.play-score {
+    font-size: 0.8rem;
+    color: #888;
+    margin-top: 8px;
+}
+
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

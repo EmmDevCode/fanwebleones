@@ -1,95 +1,182 @@
 /* src/components/WidgetPrincipal.css */
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Outfit:wght@400;600;700;800&display=swap');
 
-/* Loading State */
+/* ===== Loading State ===== */
 .wp-loading-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 180px;
-  background: rgba(24, 24, 27, 0.4);
+  height: 300px;
+  background: rgba(18, 18, 18, 0.7);
   backdrop-filter: blur(20px);
-  border-radius: 20px;
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
   color: #a1a1aa;
   font-family: 'Outfit', sans-serif;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 16px;
+  max-width: 850px;
+  margin: 0 auto;
 }
 
 .wp-spinner {
-  width: 30px;
-  height: 30px;
-  border: 3px solid rgba(0, 168, 89, 0.2);
-  border-top-color: #00A859;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(247, 177, 18, 0.2);
+  border-top-color: #f7b112;
   border-radius: 50%;
   animation: wp-spin 1s linear infinite;
-  margin-bottom: 12px;
 }
 
 @keyframes wp-spin { to { transform: rotate(360deg); } }
 
-/* Contenedor Principal */
+/* ===== Contenedor Principal ===== */
 .wp-card {
-  background: linear-gradient(180deg, rgba(39, 39, 42, 0.85) 0%, rgba(24, 24, 27, 0.95) 100%);
+  background: radial-gradient(circle at top, #1c2b21 0%, #0d120f 80%); /* Sensación de pasto/estadio */
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 30px 60px -15px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   color: #fafafa;
   font-family: 'Outfit', sans-serif;
   overflow: hidden;
   position: relative;
-  max-width: 600px;
+  max-width: 850px;
   margin: 0 auto;
+  min-height: 250px;
 }
 
-/* -----------------------------
+/* Luces de estadio (Stadium Lights Effect) */
+.wp-card::after {
+  content: '';
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 250px;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.12) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Línea decorativa superior */
+.wp-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00A859, #f7b112, #ff4500, #00A859);
+  background-size: 200% auto;
+  animation: shine-border 3s linear infinite;
+  z-index: 10;
+}
+
+@keyframes shine-border {
+  to { background-position: 200% center; }
+}
+
+/* ===================================
+   EN VIVO — LIVE HEADER
+   =================================== */
+.wp-live-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px 0;
+  position: relative;
+  z-index: 5;
+}
+
+.wp-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #ef4444;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 6px 16px;
+  border-radius: 20px;
+  letter-spacing: 2px;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.wp-live-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+  animation: wp-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes wp-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ===================================
    SCOREBOARD ESTILO TV (EN VIVO)
-   ----------------------------- */
+   =================================== */
 .wp-scoreboard-tv {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
-  background: linear-gradient(90deg, #18181b 0%, #27272a 50%, #18181b 100%);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.05);
-  padding: 16px 20px;
+  padding: 24px 40px;
   position: relative;
+  z-index: 5;
 }
 
 .wp-team {
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: 35%;
+  gap: 20px;
+  flex: 1;
 }
 
 .wp-team.visitor { justify-content: flex-start; }
 .wp-team.local { justify-content: flex-end; }
 
 .wp-team-logo {
-  width: 48px;
-  height: 48px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.8));
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.wp-team.local .wp-team-logo {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #f7b112;
 }
 
 .wp-team-abbr {
-  font-family: 'Teko', sans-serif; /* Fuente condensada estilo TV */
-  font-size: 28px;
+  font-family: 'Teko', sans-serif;
+  font-size: 42px;
   font-weight: 600;
-  color: #a1a1aa;
-  letter-spacing: 1px;
-  margin-top: 4px;
+  color: #d4d4d8;
+  letter-spacing: 2px;
+  line-height: 1;
 }
 
 .wp-score {
   font-family: 'Teko', sans-serif;
-  font-size: 54px;
+  font-size: 84px;
   font-weight: 700;
   line-height: 1;
   color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
 }
 
 .wp-inning-indicator {
@@ -97,272 +184,382 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 30%;
+  min-width: 100px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .wp-inning-arrow {
-  font-size: 18px;
-  color: #ffd60a;
+  font-size: 24px;
+  color: #f7b112;
   line-height: 1;
-  text-shadow: 0 0 10px rgba(255, 214, 10, 0.5);
+  text-shadow: 0 0 15px rgba(247, 177, 18, 0.8);
 }
 
 .wp-inning-num {
   font-family: 'Teko', sans-serif;
-  font-size: 32px;
+  font-size: 48px;
   font-weight: 700;
   line-height: 1;
+  color: #fff;
 }
 
-.wp-live-badge {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.4);
-  color: #ef4444;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 4px;
+.wp-inning-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #a1a1aa;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   margin-top: 4px;
-  letter-spacing: 1px;
-  animation: wp-pulse 2s infinite;
 }
 
-@keyframes wp-pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-/* -----------------------------
-   SITUACIONAL (Diamante, Leds, Stats)
-   ----------------------------- */
+/* ===================================
+   SITUACIONAL (Diamante + BSO + Duelo)
+   =================================== */
 .wp-situational {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  background: rgba(0, 0, 0, 0.2);
+  padding: 24px 40px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 20px;
+  position: relative;
+  z-index: 5;
 }
 
-/* DIAMANTE REALISTA 3D */
+/* ===== DIAMANTE — Solo 1B, 2B, 3B ===== */
 .wp-diamond-container {
-  width: 60px;
-  height: 60px;
-  perspective: 200px; /* Para darle efecto 3D */
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  border-radius: 50%;
 }
 
 .wp-diamond {
   position: relative;
-  width: 40px;
-  height: 40px;
-  transform: rotateX(55deg) rotateZ(45deg);
-  transform-style: preserve-3d;
-}
-
-.wp-dirt-path {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border: 2px solid #8B5A2B; /* Color tierra de beisbol */
-  border-radius: 2px;
-  box-shadow: inset 0 0 5px rgba(139, 90, 43, 0.5);
+  width: 60px;
+  height: 60px;
+  transform: rotate(45deg);
 }
 
 .wp-base {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: #e4e4e7;
-  border: 1px solid #71717a;
-  transform: translateZ(2px);
+  width: 22px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: -1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .wp-base.active {
-  background: #ffd60a; /* Amarillo brillante para corredor en base */
-  border-color: #ff9f0a;
-  box-shadow: 0 0 12px #ffd60a, -1px 1px 3px rgba(0,0,0,0.5);
-  transform: translateZ(6px) scale(1.2);
+  background: #f7b112;
+  border-color: #ff8c00;
+  box-shadow: 0 0 20px rgba(247, 177, 18, 0.8), inset 0 0 5px rgba(255, 255, 255, 0.5);
+  transform: scale(1.1);
 }
 
-.wp-first-base { bottom: 0; right: -5px; }
-.wp-second-base { top: -5px; right: -5px; }
-.wp-third-base { top: -5px; left: 0; }
+/* 2B = top center */
+.wp-second-base { top: -2px; left: 50%; transform: translateX(-50%); }
 
-.wp-home-plate {
-  bottom: 0; left: 0;
-  width: 12px; height: 12px;
-  background: #ffffff;
-  /* Darle forma de home plate aproximada */
-  clip-path: polygon(0 0, 100% 0, 100% 50%, 50% 100%, 0 100%);
-  border-radius: 0;
-}
+/* 3B = middle left */
+.wp-third-base { top: 50%; left: -2px; transform: translateY(-50%); }
 
-/* LEDS DE CUENTA (B S O) */
+/* 1B = middle right */
+.wp-first-base { top: 50%; right: -2px; transform: translateY(-50%); }
+
+/* ===== LEDS DE CUENTA (B S O) ===== */
 .wp-count-board {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  background: rgba(0,0,0,0.4);
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.05);
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .wp-count-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 }
 
 .wp-count-label {
   font-family: 'Teko', sans-serif;
-  font-size: 16px;
+  font-size: 24px;
   color: #a1a1aa;
-  width: 12px;
+  width: 20px;
   line-height: 1;
+  text-align: center;
 }
 
 .wp-leds {
   display: flex;
-  gap: 4px;
+  gap: 8px;
 }
 
 .wp-led {
-  width: 8px;
-  height: 8px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
-  background: #27272a;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
-  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
 }
 
-.wp-led.ball.on { background: #32d74b; box-shadow: 0 0 8px #32d74b; }
-.wp-led.strike.on { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
-.wp-led.out.on { background: #ff9f0a; box-shadow: 0 0 8px #ff9f0a; }
+.wp-led.ball.on { background: #32d74b; border-color: #32d74b; box-shadow: 0 0 12px rgba(50, 215, 75, 0.8); }
+.wp-led.strike.on { background: #ef4444; border-color: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.8); }
+.wp-led.out.on { background: #ff9f0a; border-color: #ff9f0a; box-shadow: 0 0 12px rgba(255, 159, 10, 0.8); }
 
-/* DUELO (Pitcher / Batter) */
+/* ===== DUELO (Pitcher / Batter) ===== */
 .wp-matchup {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: 45%;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
 }
 
 .wp-player-box {
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(255,255,255,0.05);
-  padding: 6px 10px;
-  border-radius: 6px;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .wp-player-role {
   font-family: 'Teko', sans-serif;
-  font-size: 18px;
-  color: #00A859; /* Verde para los roles */
-  background: rgba(0, 168, 89, 0.15);
-  width: 24px;
-  height: 24px;
+  font-size: 22px;
+  color: #f7b112;
+  background: rgba(247, 177, 18, 0.15);
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 4px;
+  border-radius: 8px;
   line-height: 1;
+  flex-shrink: 0;
+  border: 1px solid rgba(247, 177, 18, 0.3);
 }
 
 .wp-batter-info {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .wp-player-name {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   color: #e4e4e7;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 120px;
 }
 
 .wp-player-name.active-batter {
   color: #ffffff;
   font-weight: 700;
+  font-size: 18px;
 }
 
 .wp-on-deck {
-  font-size: 10px;
-  color: #71717a;
+  font-size: 12px;
+  color: #a1a1aa;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* -----------------------------
+/* ===================================
    PRÓXIMO JUEGO
-   ----------------------------- */
+   =================================== */
 .wp-upcoming {
   padding: 0;
 }
 
 .wp-upcoming-header {
-  background: linear-gradient(90deg, #18181b, #27272a, #18181b);
-  padding: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 20px;
   text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+  z-index: 5;
 }
 
 .wp-upcoming-badge {
-  background: rgba(50, 215, 75, 0.15);
-  color: #32d74b;
-  border: 1px solid rgba(50, 215, 75, 0.3);
-  font-size: 11px;
+  background: rgba(247, 177, 18, 0.15);
+  color: #f7b112;
+  border: 1px solid rgba(247, 177, 18, 0.4);
+  font-size: 1rem;
   font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 12px;
-  letter-spacing: 1.5px;
+  padding: 8px 24px;
+  border-radius: 24px;
+  letter-spacing: 2px;
+  box-shadow: 0 0 15px rgba(247, 177, 18, 0.2);
 }
 
 .wp-upcoming-matchup {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 24px 20px;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.wp-upcoming-matchup .wp-team {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 16px;
 }
 
 .wp-team-logo-large {
-  width: 70px;
-  height: 70px;
+  width: 140px;
+  height: 140px;
   object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.4));
-  margin-bottom: 12px;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
+  background: rgba(255,255,255,0.05);
+  border-radius: 50%;
+  padding: 10px;
+  border: 2px solid rgba(255,255,255,0.1);
+  transition: transform 0.3s ease;
+}
+.wp-team-logo-large:hover {
+  transform: scale(1.05);
 }
 
 .wp-team-name {
   font-family: 'Teko', sans-serif;
-  font-size: 24px;
+  font-size: 36px;
   font-weight: 600;
-  color: #fafafa;
+  color: #ffffff;
+  line-height: 1.1;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  letter-spacing: 1px;
 }
 
 .wp-vs {
-  font-family: 'Teko', sans-serif;
-  font-size: 32px;
-  color: #71717a;
+  font-size: 64px;
+  line-height: 1;
+  filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
 }
 
 .wp-upcoming-footer {
-  background: rgba(0,0,0,0.3);
-  padding: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 24px;
   display: flex;
   justify-content: center;
-  gap: 24px;
-  font-size: 14px;
+  gap: 40px;
+  font-size: 18px;
   font-weight: 700;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  position: relative;
+  z-index: 5;
 }
 
-.wp-date { color: #a1a1aa; }
-.wp-time { color: #ffd60a; }
+.wp-date { color: #d4d4d8; }
+.wp-time { color: #f7b112; text-shadow: 0 0 10px rgba(247, 177, 18, 0.4); }
+
+/* ===================================
+   RESPONSIVE (PWA Mobile)
+   =================================== */
+@media (max-width: 768px) {
+  .wp-card {
+    border-radius: 20px;
+    max-width: 95%;
+  }
+
+  .wp-scoreboard-tv {
+    padding: 20px;
+  }
+
+  .wp-team-logo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .wp-team-abbr { font-size: 32px; }
+  .wp-score { font-size: 64px; }
+
+  .wp-situational {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .wp-matchup {
+    width: 100%;
+    flex-direction: row;
+  }
+  .wp-player-box { flex: 1; }
+
+  .wp-upcoming-matchup {
+    padding: 30px 10px;
+  }
+  .wp-team-logo-large {
+    width: 100px;
+    height: 100px;
+  }
+  .wp-team-name { font-size: 28px; }
+  .wp-vs { font-size: 48px; }
+}
+
+@media (max-width: 480px) {
+  .wp-scoreboard-tv {
+    padding: 16px 12px;
+  }
+
+  .wp-team { gap: 8px; }
+  .wp-team-logo { width: 50px; height: 50px; }
+  .wp-team-abbr { font-size: 24px; }
+  .wp-score { font-size: 48px; }
+
+  .wp-inning-num { font-size: 36px; }
+  .wp-inning-indicator { min-width: 80px; padding: 6px 12px; }
+
+  .wp-situational { padding: 16px 12px; }
+
+  .wp-diamond-container { width: 80px; height: 80px; }
+  .wp-diamond { width: 45px; height: 45px; }
+  .wp-base { width: 18px; height: 18px; }
+
+  .wp-count-board { padding: 10px; }
+  .wp-count-label { font-size: 20px; }
+  .wp-led { width: 12px; height: 12px; }
+
+  .wp-matchup { flex-direction: column; }
+  .wp-player-box { padding: 8px 12px; }
+  .wp-player-role { width: 26px; height: 26px; font-size: 18px; }
+  .wp-player-name.active-batter { font-size: 16px; }
+
+  .wp-team-logo-large { width: 80px; height: 80px; padding: 5px; }
+  .wp-team-name { font-size: 22px; }
+  .wp-vs { font-size: 36px; }
+
+  .wp-upcoming-footer {
+    padding: 16px;
+    gap: 16px;
+    font-size: 14px;
+    flex-direction: column;
+    align-items: center;
+  }
+}

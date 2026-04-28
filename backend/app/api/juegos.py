@@ -150,3 +150,42 @@ def obtener_calendario(db: Session = Depends(get_db)):
         return juegos
     except Exception as e:
         return {"error": f"Error interno: {str(e)}"}
+
+@router.get("/{id_juego}/jugadas")
+def obtener_jugadas_en_vivo(id_juego: int):
+    # Endpoint en vivo de la MLB/LMB
+    url = f"https://statsapi.mlb.com/api/v1.1/game/{id_juego}/feed/live"
+    
+    try:
+        res = requests.get(url, timeout=10)
+        data = res.json()
+        
+        # Extraemos todas las jugadas del partido
+        all_plays = data.get("liveData", {}).get("plays", {}).get("allPlays", [])
+        
+        jugadas_limpias = []
+        for play in all_plays:
+            # Solo tomamos las jugadas que ya terminaron (ej. el turno al bat completo)
+            if play.get("about", {}).get("isComplete"):
+                batedor_id = play.get("matchup", {}).get("batter", {}).get("id")
+                
+                jugada = {
+                    "id_jugada": play.get("about", {}).get("atBatIndex"),
+                    "inning": f"{play.get('about', {}).get('inning')} {'Alta' if play.get('about', {}).get('isTopInning') else 'Baja'}",
+                    "descripcion": play.get("result", {}).get("description", ""),
+                    "evento": play.get("result", {}).get("event", ""), # Ej. "Strikeout", "Home Run"
+                    "outs": play.get("count", {}).get("outs", 0),
+                    "bolas": play.get("count", {}).get("balls", 0),
+                    "strikes": play.get("count", {}).get("strikes", 0),
+                    "marcador_away": play.get("result", {}).get("awayScore", 0),
+                    "marcador_home": play.get("result", {}).get("homeScore", 0),
+                    "foto_bateador": f"https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/{batedor_id}/headshot/67/current"
+                }
+                jugadas_limpias.append(jugada)
+                
+        # Las volteamos para que la más reciente salga hasta arriba
+        jugadas_limpias.reverse()
+        return {"jugadas": jugadas_limpias}
+        
+    except Exception as e:
+        return {"error": str(e)}

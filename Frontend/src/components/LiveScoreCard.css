@@ -36,7 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.05);
 }
 
 .lsc-logo-wrapper.local {
@@ -59,7 +59,7 @@
   font-size: 56px;
   font-weight: 700;
   line-height: 1;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .lsc-inning-center {
@@ -130,13 +130,24 @@
   height: 10px;
   border-radius: 50%;
   background: #27272a;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
   transition: all 0.2s ease;
 }
 
-.lsc-led.ball.on { background: #32d74b; box-shadow: 0 0 10px #32d74b; }
-.lsc-led.strike.on { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
-.lsc-led.out.on { background: #ff9f0a; box-shadow: 0 0 10px #ff9f0a; }
+.lsc-led.ball.on {
+  background: #32d74b;
+  box-shadow: 0 0 10px #32d74b;
+}
+
+.lsc-led.strike.on {
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+}
+
+.lsc-led.out.on {
+  background: #ff9f0a;
+  box-shadow: 0 0 10px #ff9f0a;
+}
 
 /* Diamante Minimalista Realista */
 .lsc-diamond-container {
@@ -158,7 +169,10 @@
 
 .lsc-dirt {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border: 2px solid #8B5A2B;
   box-shadow: inset 0 0 4px rgba(139, 90, 43, 0.5);
 }
@@ -180,6 +194,17 @@
   transform: translateZ(5px) scale(1.2);
 }
 
-.lsc-1b { bottom: -2px; right: -5px; }
-.lsc-2b { top: -5px; right: -5px; }
-.lsc-3b { top: -5px; left: -2px; }
+.lsc-1b {
+  bottom: -2px;
+  right: -5px;
+}
+
+.lsc-2b {
+  top: -5px;
+  right: -5px;
+}
+
+.lsc-3b {
+  top: -5px;
+  left: -2px;
+}

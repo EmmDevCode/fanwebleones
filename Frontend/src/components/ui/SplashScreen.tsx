@@ -18,9 +18,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
   return (
     <div className="splash-screen">
       <div className="splash-content">
-        {/* Espacio reservado para la animación mp4 */}
         <div className="video-placeholder">
-          {/* Descomenta y ajusta la ruta cuando tengas tu video mp4 */}
           {
             <video autoPlay loop muted playsInline className="splash-video">
               <source src="/loader/loader.mp4" type="video/mp4" />
@@ -31,7 +29,10 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
 
         <h1 className="splash-title">Leones fanweb</h1>
 
-        <div className="loader"></div>
+        <div className="loader-container">
+          <div className="loader"></div>
+          <span className="loader-text">Cargando...</span>
+        </div>
       </div>
 
       <div className="splash-footer">

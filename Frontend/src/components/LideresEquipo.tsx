@@ -59,16 +59,21 @@ const LideresEquipo: React.FC = () => {
         onClick={() => manejarClickLider(data.id_jugador)}
         style={{ cursor: 'pointer' }}
       >
-        <span className="lider-categoria">{titulo}</span>
-        <img 
-          src={data.foto} 
-          alt={data.nombre} 
-          className="lider-foto" 
-          onError={(e) => e.currentTarget.src = "https://via.placeholder.com/150"} 
-        />
-        <div className="lider-info">
-          <span className="lider-nombre">{data.nombre}</span>
-          <span className="lider-valor">{valor}</span>
+        <div className="lider-card-inner">
+          <span className="lider-categoria">{titulo}</span>
+          <div className="lider-img-wrapper">
+            <img 
+              src={data.foto} 
+              alt={data.nombre} 
+              className="lider-foto" 
+              onError={(e) => e.currentTarget.src = "https://via.placeholder.com/150"} 
+            />
+            <div className="lider-badge">#1</div>
+          </div>
+          <div className="lider-info">
+            <span className="lider-nombre">{data.nombre}</span>
+            <span className="lider-valor">{valor}</span>
+          </div>
         </div>
       </div>
     );
@@ -76,25 +81,32 @@ const LideresEquipo: React.FC = () => {
 
   return (
     <div className="lideres-container">
-      <h2 className="lideres-header">LÍDERES MELENUDOS</h2>
+      <div className="lideres-header-container">
+        <h2 className="lideres-header">👑 LÍDERES MELENUDOS</h2>
+        <p className="lideres-subtitle">LOS MEJORES DE LA TEMPORADA</p>
+      </div>
       
       <div className="lideres-seccion">
-        <h3 className="seccion-titulo">PODER OFENSIVO</h3>
+        <div className="seccion-titulo-wrapper">
+          <h3 className="seccion-titulo">🔥 PODER OFENSIVO</h3>
+        </div>
         <div className="lideres-grid">
-          <LiderCard titulo="PROMEDIO (AVG)" data={lideres.bateo.avg} statKey="avg" format="avg" />
-          <LiderCard titulo="HOME RUNS" data={lideres.bateo.hr} statKey="homeRuns" />
-          <LiderCard titulo="CARRERAS IMPULSADAS" data={lideres.bateo.rbi} statKey="rbi" />
-          <LiderCard titulo="BASES ROBADAS" data={lideres.bateo.sb} statKey="stolenBases" />
+          <LiderCard titulo="📊 PROMEDIO (AVG)" data={lideres.bateo.avg} statKey="avg" format="avg" />
+          <LiderCard titulo="💥 HOME RUNS" data={lideres.bateo.hr} statKey="homeRuns" />
+          <LiderCard titulo="🏃‍♂️ CARRERAS IMPULSADAS" data={lideres.bateo.rbi} statKey="rbi" />
+          <LiderCard titulo="👟 BASES ROBADAS" data={lideres.bateo.sb} statKey="stolenBases" />
         </div>
       </div>
 
       <div className="lideres-seccion">
-        <h3 className="seccion-titulo">AS DEL MONTÍCULO</h3>
+        <div className="seccion-titulo-wrapper">
+          <h3 className="seccion-titulo">🎯 AS DEL MONTÍCULO</h3>
+        </div>
         <div className="lideres-grid">
-          <LiderCard titulo="EFECTIVIDAD (ERA)" data={lideres.pitcheo.era} statKey="era" format="avg" />
-          <LiderCard titulo="VICTORIAS" data={lideres.pitcheo.w} statKey="wins" />
-          <LiderCard titulo="PONCHES (SO)" data={lideres.pitcheo.so} statKey="strikeOuts" />
-          <LiderCard titulo="SALVAMENTOS" data={lideres.pitcheo.sv} statKey="saves" />
+          <LiderCard titulo="📉 EFECTIVIDAD (ERA)" data={lideres.pitcheo.era} statKey="era" format="avg" />
+          <LiderCard titulo="🏆 VICTORIAS" data={lideres.pitcheo.w} statKey="wins" />
+          <LiderCard titulo="⚡ PONCHES (SO)" data={lideres.pitcheo.so} statKey="strikeOuts" />
+          <LiderCard titulo="🔒 SALVAMENTOS" data={lideres.pitcheo.sv} statKey="saves" />
         </div>
       </div>
 

@@ -7,14 +7,14 @@ interface LiveScoreCardProps {
 }
 
 const LiveScoreCard: React.FC<LiveScoreCardProps> = ({ juego }) => {
-  const { 
-    local, 
-    visitante, 
-    score_local, 
-    score_visitante, 
-    inning_actual, 
-    outs, 
-    bolas, 
+  const {
+    local,
+    visitante,
+    score_local,
+    score_visitante,
+    inning_actual,
+    outs,
+    bolas,
     strikes,
     corredor_1b,
     corredor_2b,
@@ -30,7 +30,7 @@ const LiveScoreCard: React.FC<LiveScoreCardProps> = ({ juego }) => {
       <div className="lsc-scoreboard">
         <div className="lsc-team">
           <div className="lsc-logo-wrapper">
-             <span className="lsc-team-slug">{visitante.slug}</span>
+            <span className="lsc-team-slug">{visitante.slug}</span>
           </div>
           <span className="lsc-score">{score_visitante}</span>
         </div>
@@ -45,14 +45,14 @@ const LiveScoreCard: React.FC<LiveScoreCardProps> = ({ juego }) => {
         <div className="lsc-team local">
           <span className="lsc-score">{score_local}</span>
           <div className="lsc-logo-wrapper local">
-             <span className="lsc-team-slug">{local.slug}</span>
+            <span className="lsc-team-slug">{local.slug}</span>
           </div>
         </div>
       </div>
 
       {/* Stats Inferiores (Diamante y Cuenta) */}
       <div className="lsc-stats-bar">
-        
+
         <div className="lsc-count">
           <div className="lsc-count-item">
             <span className="lsc-count-label">B</span>

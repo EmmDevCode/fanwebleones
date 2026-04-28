@@ -21,21 +21,26 @@ const JuegoCard: React.FC<JuegoCardProps> = ({
 
   return (
     <div className={`game-card ${juego.estado}`}>
-      {/* Header: Fecha y Sede */}
+      {/* Header: Fecha, Sede y Estado */}
       <div className="game-header">
+        <div className={`status-badge ${juego.estado}`}>
+          {juego.estado.replace('_', ' ')}
+        </div>
         <div className="game-info-top">
           <span className="game-date">{formatearFechaLarga(juego.fecha)}</span>
-          <span className="game-time">{juego.hora.substring(0, 5)} HRS</span>
+          <span className="game-time">🕒 {juego.hora.substring(0, 5)} HRS</span>
         </div>
         <div className="game-stadium">
-          <i className="fas fa-map-marker-alt"></i> {obtenerNombreEstadio(juego)}
+          🏟️ {obtenerNombreEstadio(juego)}
         </div>
       </div>
 
       {/* Cuerpo: Enfrentamiento */}
       <div className="game-body">
         <div className="team-display visitor">
-          <img src={getLogo(juego.visitante)} alt="Logo" className="team-logo-cal" />
+          <div className="team-logo-wrapper">
+            <img src={getLogo(juego.visitante)} alt="Logo" className="team-logo-cal" />
+          </div>
           <span className="team-name-cal">{juego.visitante?.nombre}</span>
           {juego.estado === 'finalizado' && <span className="final-score">{juego.score_visitante}</span>}
         </div>
@@ -47,7 +52,9 @@ const JuegoCard: React.FC<JuegoCardProps> = ({
         <div className="team-display local">
           {juego.estado === 'finalizado' && <span className="final-score">{juego.score_local}</span>}
           <span className="team-name-cal">{juego.local?.nombre}</span>
-          <img src={getLogo(juego.local)} alt="Logo" className="team-logo-cal" />
+          <div className="team-logo-wrapper">
+            <img src={getLogo(juego.local)} alt="Logo" className="team-logo-cal" />
+          </div>
         </div>
       </div>
 
@@ -63,10 +70,6 @@ const JuegoCard: React.FC<JuegoCardProps> = ({
         </div>
       </div>
 
-      {/* Badge de estado flotante */}
-      <div className={`status-badge ${juego.estado}`}>
-        {juego.estado.replace('_', ' ')}
-      </div>
     </div>
   );
 };

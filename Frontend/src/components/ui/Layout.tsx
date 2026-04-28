@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Home, Calendar, Newspaper, User } from 'lucide-react';
+import { Home, Calendar, Newspaper, User, Users } from 'lucide-react';
 import './Layout.css';
 
 const Layout: React.FC = () => {
@@ -9,6 +9,7 @@ const Layout: React.FC = () => {
   const navItems = [
     { path: '/', icon: <Home size={24} />, label: 'Inicio' },
     { path: '/calendario', icon: <Calendar size={24} />, label: 'Juegos' },
+    { path: '/equipo', icon: <Users size={24} />, label: 'Equipo' },
     { path: '/noticias', icon: <Newspaper size={24} />, label: 'Noticias' },
     { path: '/perfil', icon: <User size={24} />, label: 'Perfil' },
   ];

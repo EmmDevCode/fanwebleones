@@ -22,7 +22,7 @@ const WidgetPrincipal: React.FC = () => {
   const obtenerAbreviatura = (nombre: string) => {
     if (!nombre) return "---";
     const nombreLower = nombre.toLowerCase();
-    
+
     const diccionario: { [key: string]: string } = {
       "leones": "YUC", "diablos": "MEX", "tigres": "TIG",
       "aguila": "VER", "águila": "VER", "pericos": "PUE",
@@ -32,24 +32,24 @@ const WidgetPrincipal: React.FC = () => {
       "saraperos": "SAL", "acereros": "MON", "rieleros": "AGS",
       "charros": "JAL", "dorados": "CHI", "caliente": "DUR",
       "durango": "DUR" // <-- ¡Eliminamos el piratas repetido que estaba aquí!
-  };
+    };
 
     for (const [clave, abrev] of Object.entries(diccionario)) {
-        if (nombreLower.includes(clave)) return abrev;
+      if (nombreLower.includes(clave)) return abrev;
     }
-    
-    // Si meten un equipo nuevo que no está en la lista, toma las primeras 3 letras
-    return nombre.substring(0, 3).toUpperCase(); 
-};
 
-// 2. EL REPARADOR DE FECHAS
+    // Si meten un equipo nuevo que no está en la lista, toma las primeras 3 letras
+    return nombre.substring(0, 3).toUpperCase();
+  };
+
+  // 2. EL REPARADOR DE FECHAS
   const formatearFechaCorrecta = (fechaString: string) => {
     if (!fechaString) return "";
     // Le inyectamos "T12:00:00" para forzar que sea a mediodía local y no regrese un día
     const fechaObj = new Date(`${fechaString}T12:00:00`);
     const opciones: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long' };
     return fechaObj.toLocaleDateString('es-ES', opciones).toUpperCase();
-};
+  };
 
   useEffect(() => {
     cargarDatos();
@@ -67,14 +67,14 @@ const WidgetPrincipal: React.FC = () => {
       <span>Sincronizando Pizarra...</span>
     </div>
   );
-  
+
   if (!datosWidget) return null;
 
   const { tipo_vista, datos } = datosWidget;
 
   const getLogo = (equipo: any) => {
     if (!equipo) return "https://via.placeholder.com/50";
-    return `/logos/${equipo.slug}.png`; 
+    return `/logos/${equipo.slug}.png`;
   };
 
   // ... (tus funciones de arriba se quedan igualitas)
@@ -91,7 +91,7 @@ const WidgetPrincipal: React.FC = () => {
 
     return (
       <div className="wp-card wp-live">
-        
+
         {/* Zona Superior: Marcador Principal (Estilo TV) */}
         <div className="wp-scoreboard-tv">
           <div className="wp-team visitor">
@@ -117,14 +117,12 @@ const WidgetPrincipal: React.FC = () => {
 
         {/* ... (Todo lo del diamante y cuenta se queda igual) ... */}
         <div className="wp-situational">
-          {/* Diamante Realista */}
+          {/* Diamante — Solo 1B, 2B, 3B */}
           <div className="wp-diamond-container">
             <div className="wp-diamond">
-              <div className="wp-dirt-path"></div>
               <div className={`wp-base wp-second-base ${b2 ? 'active' : ''}`}></div>
               <div className={`wp-base wp-third-base ${b3 ? 'active' : ''}`}></div>
               <div className={`wp-base wp-first-base ${b1 ? 'active' : ''}`}></div>
-              <div className="wp-base wp-home-plate"></div>
             </div>
           </div>
 
@@ -177,7 +175,7 @@ const WidgetPrincipal: React.FC = () => {
     return (
       <div className="wp-card wp-upcoming">
         <div className="wp-upcoming-header">
-          <span className="wp-upcoming-badge">PRÓXIMO JUEGO</span>
+          <span className="wp-upcoming-badge">📅 PRÓXIMO JUEGO</span>
         </div>
         <div className="wp-upcoming-matchup">
           <div className="wp-team">
@@ -194,8 +192,8 @@ const WidgetPrincipal: React.FC = () => {
         </div>
         <div className="wp-upcoming-footer">
           {/* Muestra la fecha ya reparada */}
-          <span className="wp-date">{fecha}</span>
-          <span className="wp-time">{hora} HRS</span>
+          <span className="wp-date">🗓️ {fecha}</span>
+          <span className="wp-time">⏰ {hora} HRS</span>
         </div>
       </div>
     );

@@ -40,7 +40,7 @@ const Standings: React.FC = () => {
     const slugAuto = nombreEquipo
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
       .toLowerCase();
-      
+
     // ZONA SUR
     if (slugAuto.includes("leones")) return "/logos/leones.png";
     if (slugAuto.includes("aguila")) return "/logos/el-aguila.png";
@@ -62,7 +62,7 @@ const Standings: React.FC = () => {
     if (slugAuto.includes("rieleros")) return "/logos/rieleros.png";
     if (slugAuto.includes("saraperos")) return "/logos/saraperos.png";
     if (slugAuto.includes("sultanes")) return "/logos/sultanes.png";
-    if (slugAuto.includes("tecolotes")) return "/logos/tecolotes.png";
+    if (slugAuto.includes("tecolotes") || slugAuto.includes("tecos")) return "/logos/tecolotes.png";
     if (slugAuto.includes("toros")) return "/logos/toros.png";
 
     // Fallback de seguridad (por si cambia el nombre de un equipo)
@@ -78,13 +78,13 @@ const Standings: React.FC = () => {
 
       {/* Selector tipo Segmented Control de iOS */}
       <div className="zone-selector">
-        <button 
+        <button
           className={`zone-btn ${zonaActiva === "Zona Sur" ? "active" : ""}`}
           onClick={() => setZonaActiva("Zona Sur")}
         >
           <span className="zone-text">Zona Sur</span>
         </button>
-        <button 
+        <button
           className={`zone-btn ${zonaActiva === "Zona Norte" ? "active" : ""}`}
           onClick={() => setZonaActiva("Zona Norte")}
         >
@@ -112,14 +112,14 @@ const Standings: React.FC = () => {
                 <tr key={index} className={isLeones ? "highlight-row" : ""}>
                   <td className="team-name-cell">
                     <span className="rank-number">{index + 1}</span>
-                    <img 
-                      src={getLogoStanding(equipo.nombre)} 
-                      alt={equipo.nombre} 
+                    <img
+                      src={getLogoStanding(equipo.nombre)}
+                      alt={equipo.nombre}
                       className="standing-team-logo"
                       onError={(e) => { e.currentTarget.src = "https://via.placeholder.com/25/333333/FFFFFF?text=LMB"; }}
                     />
                     <span className="team-name">
-                      {equipo.nombre.split(' de ')[0].replace(' del ', '')} 
+                      {equipo.nombre.split(' de ')[0].replace(' del ', '')}
                     </span>
                   </td>
                   <td className="stat-cell">{equipo.victorias}</td>

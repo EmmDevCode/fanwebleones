@@ -1,114 +1,107 @@
 /* src/pages/Calendario.css */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
 
-.calendario-container {
-  padding: 24px 20px;
-  background-color: #000000;
+.calendario-page {
+  padding: 30px 20px 100px; /* 100px para el padding bottom PWA */
+  background: #09090b;
   min-height: 100vh;
   color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Outfit', sans-serif;
 }
 
 .calendario-header {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 24px;
+  text-align: center;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.calendario-header h1 {
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(90deg, #ffffff, #a1a1aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
 }
 
-.mes-title {
-  font-size: 18px;
+.calendario-header p {
+  font-size: 16px;
+  color: #f7b112;
   font-weight: 600;
-  color: #8e8e93;
-  margin-top: 24px;
-  margin-bottom: 12px;
+  margin-top: 8px;
   text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Efecto de luz de estadio detrás del header */
+.calendario-header::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 600px;
+  height: 150px;
+  background: radial-gradient(ellipse, rgba(247, 177, 18, 0.15), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.calendario-header > * {
+  position: relative;
+  z-index: 1;
+}
+
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #09090b;
+  color: #f7b112;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
   letter-spacing: 1px;
 }
 
-/* Tarjeta de Juego */
-.juego-card {
-  background-color: #1c1c1e;
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 12px;
-  border: 1px solid #2c2c2e;
-  display: flex;
-  flex-direction: column;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .calendario-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
 }
 
-.juego-fecha {
-  font-size: 12px;
-  color: #8e8e93;
-  font-weight: 500;
-  margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.badge-finalizado {
-  background-color: #3a3a3c;
-  color: #ffffff;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.badge-programado {
-  background-color: #0a84ff; /* Azul estilo iOS */
-  color: #ffffff;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-/* Equipos y Marcador */
-.juego-equipos {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.equipo {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex: 1;
-}
-
-.equipo-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #3a3a3c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.equipo-nombre {
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.marcador-central {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 24px;
-  font-weight: 700;
-  padding: 0 16px;
-}
-
-.marcador-vs {
-  color: #5c5c5f;
-  font-size: 16px;
-  font-weight: 500;
+@media (max-width: 480px) {
+  .calendario-page {
+    padding: 20px 16px 90px;
+  }
+  
+  .calendario-header {
+    margin-bottom: 24px;
+  }
+  
+  .calendario-header h1 {
+    font-size: 28px;
+  }
+  
+  .calendario-header p {
+    font-size: 12px;
+  }
+  
+  .calendario-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
