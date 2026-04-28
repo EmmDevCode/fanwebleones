@@ -132,3 +132,5 @@ class Jugador(Base):
     foto_url = Column(String(500))
     equipo = Column(String(100), default="Leones de Yucatán")
     activo = Column(Boolean, default=True)
+    id_lmb = Column(String(20), nullable=True)
+  

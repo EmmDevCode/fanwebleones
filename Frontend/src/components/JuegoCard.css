@@ -1,0 +1,165 @@
+/* src/components/JuegoCard.css */
+.game-card {
+  background: linear-gradient(145deg, #1e1e1e, #121212);
+  border-radius: 15px;
+  border: 1px solid #333;
+  padding: 1.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  border-color: #f7b112; /* Dorado Leones */
+  box-shadow: 0 6px 20px rgba(247, 177, 18, 0.2);
+}
+
+/* Cabecera */
+.game-header {
+  border-bottom: 1px solid #2a2a2a;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.game-info-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 0.5px;
+}
+
+.game-date {
+  color: #f7b112;
+}
+
+.game-stadium {
+  font-size: 0.7rem;
+  color: #666;
+  margin-top: 5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Cuerpo del enfrentamiento */
+.game-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.team-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 42%;
+  gap: 8px;
+}
+
+.team-logo-cal {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(0,0,0,0.4));
+}
+
+.team-name-cal {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #eee;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.game-vs-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 16%;
+}
+
+.vs-label {
+  font-weight: 900;
+  color: #444;
+  font-size: 1.2rem;
+}
+
+.final-label {
+  background: #333;
+  color: #fff;
+  font-size: 0.6rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-top: 5px;
+}
+
+.final-score {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+
+/* Footer con Pitchers */
+.game-footer {
+  margin-top: 1.2rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.pitcher-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  margin: 2px 0;
+}
+
+.pitcher-label {
+  color: #555;
+  font-weight: bold;
+}
+
+.pitcher-name {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* Badges */
+.status-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px 12px;
+  font-size: 0.65rem;
+  font-weight: 900;
+  border-bottom-left-radius: 12px;
+  text-transform: uppercase;
+}
+
+.status-badge.finalizado { background: #222; color: #555; }
+.status-badge.programado { background: #f7b112; color: #000; }
+.status-badge.en_vivo { 
+  background: #c0392b; 
+  color: white; 
+  animation: pulse-live 1.5s infinite;
+}
+
+@keyframes pulse-live {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}

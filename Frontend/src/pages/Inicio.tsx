@@ -2,6 +2,7 @@ import React from 'react';
 import './Inicio.css';
 import WidgetPrincipal from '@/components/WidgetPrincipal';
 import Standings from '@/components/Standings';
+import LideresEquipo from '@/components/LideresEquipo';
 
 const Inicio: React.FC = () => {
   // Obtenemos la fecha actual formateada para darle más contexto a la app
@@ -28,6 +29,7 @@ const Inicio: React.FC = () => {
         </div>
         <div className="standings-wrapper">
           <Standings />
+          <LideresEquipo />
         </div>
       </section>
 

@@ -18,6 +18,39 @@ const WidgetPrincipal: React.FC = () => {
       });
   };
 
+  // 1. EL DICCIONARIO DE ABREVIATURAS LMB
+  const obtenerAbreviatura = (nombre: string) => {
+    if (!nombre) return "---";
+    const nombreLower = nombre.toLowerCase();
+    
+    const diccionario: { [key: string]: string } = {
+      "leones": "YUC", "diablos": "MEX", "tigres": "TIG",
+      "aguila": "VER", "águila": "VER", "pericos": "PUE",
+      "guerreros": "OAX", "olmecas": "TAB", "piratas": "CAM",
+      "bravos": "LEO", "conspiradores": "QRO", "sultanes": "MTY",
+      "toros": "TIJ", "tecos": "LAR", "algodoneros": "LAG",
+      "saraperos": "SAL", "acereros": "MON", "rieleros": "AGS",
+      "charros": "JAL", "dorados": "CHI", "caliente": "DUR",
+      "durango": "DUR" // <-- ¡Eliminamos el piratas repetido que estaba aquí!
+  };
+
+    for (const [clave, abrev] of Object.entries(diccionario)) {
+        if (nombreLower.includes(clave)) return abrev;
+    }
+    
+    // Si meten un equipo nuevo que no está en la lista, toma las primeras 3 letras
+    return nombre.substring(0, 3).toUpperCase(); 
+};
+
+// 2. EL REPARADOR DE FECHAS
+  const formatearFechaCorrecta = (fechaString: string) => {
+    if (!fechaString) return "";
+    // Le inyectamos "T12:00:00" para forzar que sea a mediodía local y no regrese un día
+    const fechaObj = new Date(`${fechaString}T12:00:00`);
+    const opciones: Intl.DateTimeFormatOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+    return fechaObj.toLocaleDateString('es-ES', opciones).toUpperCase();
+};
+
   useEffect(() => {
     cargarDatos();
     const intervalo = setInterval(() => {
@@ -44,6 +77,8 @@ const WidgetPrincipal: React.FC = () => {
     return `/logos/${equipo.slug}.png`; 
   };
 
+  // ... (tus funciones de arriba se quedan igualitas)
+
   if (tipo_vista === "en_vivo") {
     const b1 = datos.corredor_1b;
     const b2 = datos.corredor_2b;
@@ -61,7 +96,8 @@ const WidgetPrincipal: React.FC = () => {
         <div className="wp-scoreboard-tv">
           <div className="wp-team visitor">
             <img src={getLogo(datos.visitante)} alt="Visitante" className="wp-team-logo" />
-            <span className="wp-team-abbr">{(datos.visitante?.slug || "VIS").substring(0, 3).toUpperCase()}</span>
+            {/* AQUÍ USAMOS LA FUNCIÓN PARA EL VISITANTE */}
+            <span className="wp-team-abbr">{obtenerAbreviatura(datos.visitante?.nombre)}</span>
             <span className="wp-score">{datos.score_visitante || 0}</span>
           </div>
 
@@ -73,14 +109,14 @@ const WidgetPrincipal: React.FC = () => {
 
           <div className="wp-team local">
             <span className="wp-score">{datos.score_local || 0}</span>
-            <span className="wp-team-abbr">YUC</span>
+            {/* AQUÍ USAMOS LA FUNCIÓN PARA EL LOCAL */}
+            <span className="wp-team-abbr">{obtenerAbreviatura(datos.local?.nombre)}</span>
             <img src={getLogo(datos.local)} alt="Local" className="wp-team-logo" />
           </div>
         </div>
 
-        {/* Zona Inferior: Diamante, Cuenta y Jugadores */}
+        {/* ... (Todo lo del diamante y cuenta se queda igual) ... */}
         <div className="wp-situational">
-          
           {/* Diamante Realista */}
           <div className="wp-diamond-container">
             <div className="wp-diamond">
@@ -128,14 +164,14 @@ const WidgetPrincipal: React.FC = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     );
   }
 
   if (tipo_vista === "proximo") {
-    const fecha = new Date(datos.fecha).toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
+    // AQUÍ USAMOS TU REPARADOR DE FECHAS
+    const fecha = formatearFechaCorrecta(datos.fecha);
     const hora = datos.hora?.substring(0, 5) || "19:30";
 
     return (
@@ -146,16 +182,19 @@ const WidgetPrincipal: React.FC = () => {
         <div className="wp-upcoming-matchup">
           <div className="wp-team">
             <img src={getLogo(datos.local)} alt="L" className="wp-team-logo-large" />
-            <span className="wp-team-name">LEONES</span>
+            {/* AQUÍ MOSTRAMOS EL NOMBRE COMPLETO DINÁMICAMENTE */}
+            <span className="wp-team-name">{datos.local?.nombre?.toUpperCase()}</span>
           </div>
           <div className="wp-vs">VS</div>
           <div className="wp-team">
             <img src={getLogo(datos.visitante)} alt="V" className="wp-team-logo-large" />
-            <span className="wp-team-name">{datos.visitante?.nombre?.toUpperCase() || "RIVAL"}</span>
+            {/* AQUÍ MOSTRAMOS EL NOMBRE COMPLETO DINÁMICAMENTE */}
+            <span className="wp-team-name">{datos.visitante?.nombre?.toUpperCase()}</span>
           </div>
         </div>
         <div className="wp-upcoming-footer">
-          <span className="wp-date">{fecha.toUpperCase()}</span>
+          {/* Muestra la fecha ya reparada */}
+          <span className="wp-date">{fecha}</span>
           <span className="wp-time">{hora} HRS</span>
         </div>
       </div>

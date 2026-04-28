@@ -36,17 +36,37 @@ const Standings: React.FC = () => {
   const equiposMostrar = posiciones[zonaActiva] || [];
 
   const getLogoStanding = (nombreEquipo: string) => {
+    // Normalizamos el nombre para evitar problemas con mayúsculas o acentos
     const slugAuto = nombreEquipo
       .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-");
+      .toLowerCase();
       
+    // ZONA SUR
     if (slugAuto.includes("leones")) return "/logos/leones.png";
     if (slugAuto.includes("aguila")) return "/logos/el-aguila.png";
-    if (slugAuto.includes("tigres")) return "/logos/tigres-de-quintana-roo.png";
-    if (slugAuto.includes("pericos")) return "/logos/pericos-de-puebla.png";
-    // El resto buscará su nombre automático con guiones
-    return `/logos/${slugAuto}.png`;
+    if (slugAuto.includes("tigres")) return "/logos/tigres.png"; // Ajustado para ser más simple
+    if (slugAuto.includes("pericos")) return "/logos/pericos.png"; // Ajustado
+    if (slugAuto.includes("diablos")) return "/logos/diablos.png";
+    if (slugAuto.includes("bravos")) return "/logos/bravos.png";
+    if (slugAuto.includes("conspiradores")) return "/logos/conspiradores.png";
+    if (slugAuto.includes("guerreros")) return "/logos/guerreros.png";
+    if (slugAuto.includes("olmecas")) return "/logos/olmecas.png";
+    if (slugAuto.includes("piratas")) return "/logos/piratas.png";
+
+    // ZONA NORTE
+    if (slugAuto.includes("acereros")) return "/logos/acereros.png";
+    if (slugAuto.includes("algodoneros")) return "/logos/algodoneros.png";
+    if (slugAuto.includes("caliente")) return "/logos/caliente.png";
+    if (slugAuto.includes("charros")) return "/logos/charros.png";
+    if (slugAuto.includes("dorados")) return "/logos/dorados.png";
+    if (slugAuto.includes("rieleros")) return "/logos/rieleros.png";
+    if (slugAuto.includes("saraperos")) return "/logos/saraperos.png";
+    if (slugAuto.includes("sultanes")) return "/logos/sultanes.png";
+    if (slugAuto.includes("tecolotes")) return "/logos/tecolotes.png";
+    if (slugAuto.includes("toros")) return "/logos/toros.png";
+
+    // Fallback de seguridad (por si cambia el nombre de un equipo)
+    return "/logos/default.png";
   };
 
   return (

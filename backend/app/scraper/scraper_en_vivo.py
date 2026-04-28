@@ -17,13 +17,20 @@ def actualizar_pizarra_en_vivo():
         juego = db.query(Juego).filter(Juego.estado == "en vivo").first()
 
         if not juego:
-            hoy = datetime.now().date()
+            ahora = datetime.now()
             juego = db.query(Juego).filter(
                 Juego.id_lmb.isnot(None),
                 Juego.estado == "programado",
-                Juego.fecha == hoy # <-- FILTRO CRUCIAL
+                Juego.fecha == ahora.date(), 
+                Juego.hora <= ahora.time()   
             ).first()
 
+        # 🛡️ EL ESCUDO: Si después de buscar no encontró nada, apagamos en silencio
+        if not juego:
+            # Puedes dejar un print("Zzz... Esperando la hora del juego") si quieres, o solo un return
+            return
+
+        # Si llegamos aquí, es porque SÍ hay un juego válido
         print(f"⚾ Conectando a la Matrix de la MLB (Juego: {juego.id_lmb})...")
         
         # 2. La API secreta y oficial de Grandes Ligas

@@ -132,3 +132,21 @@ def obtener_posiciones():
 
     except Exception as e:
         return {"error": f"Error interno: {str(e)}"}
+
+
+# -----------------------------------------------------
+# ENDPOINT 3: CALENDARIO COMPLETO
+# -----------------------------------------------------
+@router.get("/calendario")
+def obtener_calendario(db: Session = Depends(get_db)):
+    try:
+        # Traemos TODOS los juegos, ordenados por fecha y hora
+        juegos = db.query(Juego).options(
+            joinedload(Juego.local),
+            joinedload(Juego.visitante),
+            joinedload(Juego.estadio) # <-- ¡NUEVO! Conectamos la tabla estadios
+        ).order_by(Juego.fecha.asc(), Juego.hora.asc()).all()
+        
+        return juegos
+    except Exception as e:
+        return {"error": f"Error interno: {str(e)}"}

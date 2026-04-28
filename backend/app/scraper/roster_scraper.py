@@ -24,8 +24,6 @@ def extraer_roster_leones():
     print("🦁 Infiltrándonos en la API de Next.js de la LMB...")
     url = "https://lmb.com.mx/equipos/leones/roster"
     
-    # Enviamos el header RSC para decirle a Next.js que nos devuelva 
-    # la data cruda que encontraste, en lugar del HTML visual.
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
         'RSC': '1' 
@@ -33,10 +31,9 @@ def extraer_roster_leones():
 
     try:
         response = requests.get(url, headers=headers, timeout=15)
-        # Forzamos la codificación UTF-8 para que acentos como "César" se lean bien
         response.encoding = 'utf-8' 
         
-        # El Regex Mágico: Busca cualquier bloque que empiece con {"uuid" y termine en "edad": número}
+        # El Regex Mágico
         patron = r'\{"uuid":\d+,"name":".*?"edad":\d+\}'
         jugadores_raw = re.findall(patron, response.text)
 
@@ -53,6 +50,9 @@ def extraer_roster_leones():
         for jugador_str in jugadores_raw:
             data = json.loads(jugador_str)
             
+            # 1. ¡AQUÍ ESTÁ LA MAGIA! Extraemos el ID oficial de la MLB/LMB
+            id_oficial = str(data.get("uuid", ""))
+            
             raw_name = data.get("name", "")
             if " #" in raw_name:
                 nombre, numero = raw_name.split(" #")
@@ -62,7 +62,6 @@ def extraer_roster_leones():
 
             posicion_limpia = mapear_posicion(data.get("pos", ""))
             
-            # 2. GUARDAMOS EL NOMBRE LIMPIO EN NUESTRA LISTA
             nombres_activos_lmb.append(nombre)
 
             # Verificamos si ya existe
@@ -76,24 +75,26 @@ def extraer_roster_leones():
                     bateo=data.get("bat", ""),
                     picheo=data.get("pitch", ""),
                     foto_url=data.get("imageUrl", ""),
-                    equipo="Leones de Yucatán"
+                    equipo="Leones de Yucatán",
+                    id_lmb=id_oficial # <-- 2. Lo guardamos al crear
                 )
                 db.add(nuevo_jugador)
                 insertados += 1
             else:
-                # Si existe, le actualizamos la foto y el número por si cambiaron
+                # 3. Lo actualizamos si el jugador ya existía en tu base
                 existe.foto_url = data.get("imageUrl", "")
                 existe.numero = numero
+                existe.id_lmb = id_oficial # <-- Aseguramos que los viejos también lo tengan
                 actualizados += 1
 
         db.commit()
         print(f"✅ ¡Hack completado! {insertados} jugadores nuevos insertados y {actualizados} actualizados.")
 
+        # Lógica de bajas (se queda intacta)
         jugadores_db = db.query(Jugador).filter(Jugador.equipo == "Leones de Yucatán").all()
         
         bajas = 0
         for j_db in jugadores_db:
-            # 3. AHORA COMPARAMOS CONTRA LA LISTA QUE LLENAMOS ARRIBA
             if j_db.nombre not in nombres_activos_lmb:
                 if j_db.activo:
                     j_db.activo = False

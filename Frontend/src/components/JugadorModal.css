@@ -1,0 +1,155 @@
+/* src/components/JugadorModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: linear-gradient(145deg, #1a1a1a, #111);
+  border: 1px solid #333;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  animation: slideUp 0.3s ease;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 10;
+}
+
+.close-btn:hover {
+  color: #fff;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.player-large-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f7b112; /* Dorado Leones */
+  margin-right: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.player-main-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-number {
+  color: #f7b112;
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.player-pos-team {
+  color: #aaa;
+  margin: 5px 0 10px 0;
+  font-size: 0.9rem;
+}
+
+.bat-pitch-info {
+  display: flex;
+  gap: 10px;
+}
+
+.info-pill {
+  background: #333;
+  color: #ddd;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.stats-container {
+  padding: 2rem;
+}
+
+.stats-container h3 {
+  margin-top: 0;
+  color: #ccc;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid #222;
+}
+
+.stat-item label {
+  color: #777;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-item span {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.no-stats-msg {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
