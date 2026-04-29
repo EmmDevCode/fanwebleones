@@ -41,7 +41,7 @@ const Inicio: React.FC = () => {
         </p>
         <div className="footer-divider"></div>
         <p className="footer-signature">
-          🦁 Desarrollada por y para los fans | <a href="" target="_blank" rel="noopener noreferrer" className="signature-link">secreto</a>
+          🦁 Desarrollada por y para los fans | <a href="" target="_blank" rel="noopener noreferrer" className="signature-link">LEONMELENUDO</a>
         </p>
       </footer>
 
