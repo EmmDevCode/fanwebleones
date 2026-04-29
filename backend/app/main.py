@@ -29,8 +29,8 @@ async def lifespan(app: FastAPI):
     scheduler = BackgroundScheduler()
     
     # --- TAREA 1: El Roster ---
-    # Actualiza las fotos y altas/bajas cada 7 días
-    scheduler.add_job(extraer_roster_leones, 'interval', days=7) 
+    # 🔥 CAMBIO APLICADO: Actualiza el roster todos los días a las 17:00 (5:00 PM)
+    scheduler.add_job(extraer_roster_leones, 'cron', hour=17, minute=0) 
     
     # --- TAREA 2: El Buscador Matutino ---
     # Todos los días a las 9:00 AM busca contra quién jugamos y saca el ID

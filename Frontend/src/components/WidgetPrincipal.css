@@ -266,14 +266,14 @@
   transform: scale(1.1);
 }
 
-/* 2B = top center */
-.wp-second-base { top: -2px; left: 50%; transform: translateX(-50%); }
+/* 2B = top point (original top-left corner) */
+.wp-second-base { top: 0; left: 0; }
 
-/* 3B = middle left */
-.wp-third-base { top: 50%; left: -2px; transform: translateY(-50%); }
+/* 3B = left point (original bottom-left corner) */
+.wp-third-base { bottom: 0; left: 0; }
 
-/* 1B = middle right */
-.wp-first-base { top: 50%; right: -2px; transform: translateY(-50%); }
+/* 1B = right point (original top-right corner) */
+.wp-first-base { top: 0; right: 0; }
 
 /* ===== LEDS DE CUENTA (B S O) ===== */
 .wp-count-board {
