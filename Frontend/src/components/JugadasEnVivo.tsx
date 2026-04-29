@@ -17,7 +17,7 @@ const JugadasEnVivo: React.FC<Props> = ({ idJuego }) => {
 
     const fetchJugadas = async () => {
         try {
-            const res = await axios.get(`http://127.0.0.1:8000/api/juegos/${idJuego}/jugadas`);
+            const res = await axios.get(`/api/juegos/${idJuego}/jugadas`);
             const jugadasNuevas = res.data.jugadas || [];
 
             if (jugadasNuevas.length > 0) {

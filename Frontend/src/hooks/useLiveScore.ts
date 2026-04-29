@@ -11,7 +11,7 @@ export const useLiveScore = () => {
     const fetchLiveScore = async () => {
       try {
         // Asegúrate de que esta URL coincida con el puerto de tu FastAPI (usualmente 8000)
-        const response = await fetch('http://localhost:8000/api/juegos/en-vivo');
+        const response = await fetch('/api/juegos/en-vivo');
         
         if (!response.ok) {
           throw new Error('No hay juegos activos en este momento');

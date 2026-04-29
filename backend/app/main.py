@@ -56,7 +56,7 @@ app = FastAPI(title="Leones Fan API", version="1.0", lifespan=lifespan)
 # Configuración de CORS para permitir peticiones desde tu frontend en React
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"], # Tu puerto de Vite
+    allow_origins=["*"],# Tu puerto de Vite
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

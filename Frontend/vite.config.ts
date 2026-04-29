@@ -7,16 +7,16 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate', // El Service Worker se actualiza solo
+      registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
         name: 'Leones Fan App',
         short_name: 'Leones App',
         description: 'Resultados en vivo y estadísticas de los Leones de Yucatán.',
-        theme_color: '#000000',      // Barra de estado negra tipo iOS
-        background_color: '#000000', // Fondo de la pantalla de carga (splash screen)
-        display: 'standalone',       // Oculta la barra del navegador (experiencia nativa)
-        orientation: 'portrait',     // Bloquea en vertical
+        theme_color: '#000000',
+        background_color: '#000000',
+        display: 'standalone',
+        orientation: 'portrait',
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -32,15 +32,27 @@ export default defineConfig({
             src: 'pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable' // Para los íconos adaptativos de Android
+            purpose: 'any maskable'
           }
         ]
       }
     })
   ],
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
+
+  // 🔥 ESTO ES LO IMPORTANTE
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8000',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
 })

@@ -8,7 +8,7 @@ const WidgetPrincipal: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   const cargarDatos = () => {
-    axios.get("http://127.0.0.1:8000/api/juegos/widget-principal")
+    axios.get("/api/juegos/widget-principal")
       .then(res => {
         setDatosWidget(res.data);
         setLoading(false);

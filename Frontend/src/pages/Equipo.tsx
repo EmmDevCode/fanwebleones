@@ -21,7 +21,7 @@ const Equipo: React.FC = () => {
   const manejarClickJugador = async (id: number) => {
     setLoadingModal(true); // Empieza a cargar
     try {
-        const res = await axios.get(`http://127.0.0.1:8000/api/equipo/jugadores/${id}/stats`); // Ojo a la ruta, la ajusté a tu equipo.py
+        const res = await axios.get(`/api/equipo/jugadores/${id}/stats`); // Ojo a la ruta, la ajusté a tu equipo.py
         setJugadorSeleccionado(res.data.perfil);
         setStatsActuales(res.data.stats_temporada);
     } catch (err) {
@@ -32,7 +32,7 @@ const Equipo: React.FC = () => {
   };
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/equipo/roster")
+    axios.get("/api/equipo/roster")
       .then(res => {
         setRoster(res.data);
         setLoading(false);
