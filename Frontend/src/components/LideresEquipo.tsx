@@ -16,7 +16,7 @@ const LideresEquipo: React.FC = () => {
  useEffect(() => {
     // 1. Metemos la llamada a la API en una función
     const cargarLideres = () => {
-      axios.get("http://127.0.0.1:8000/api/equipo/lideres")
+      axios.get("/api/equipo/lideres")
         .then(res => {
           if (!res.data.error) setLideres(res.data);
           setLoading(false);
@@ -50,7 +50,7 @@ const LideresEquipo: React.FC = () => {
     setLoadingModal(true);
     try {
         // Asegúrate de que esta ruta sea la misma que usas en Equipo.tsx
-        const res = await axios.get(`http://127.0.0.1:8000/api/equipo/jugadores/${id}/stats`);
+        const res = await axios.get(`/api/equipo/jugadores/${id}/stats`);
         setJugadorSeleccionado(res.data.perfil);
         setStatsActuales(res.data.stats_temporada);
     } catch (err) {

@@ -8,10 +8,7 @@ load_dotenv()
 
 # Obtenemos la URL de conexión. 
 # Si no encuentra el .env, usa una cadena por defecto (útil para desarrollo rápido)
-SQLALCHEMY_DATABASE_URL = os.getenv(
-    "DATABASE_URL", 
-    "postgresql://postgres:admin123@localhost:5432/fanwebleones"
-)
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Creamos el motor de la base de datos
 engine = create_engine(SQLALCHEMY_DATABASE_URL)

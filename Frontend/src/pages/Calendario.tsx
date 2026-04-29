@@ -30,7 +30,7 @@ const Calendario: React.FC = () => {
   };
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/juegos/calendario")
+    axios.get("/api/juegos/calendario")
       .then(res => {
         if (Array.isArray(res.data)) setJuegos(res.data);
         setLoading(false);

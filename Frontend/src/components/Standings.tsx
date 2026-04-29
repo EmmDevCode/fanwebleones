@@ -8,7 +8,7 @@ const Standings: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/juegos/posiciones")
+    axios.get("/api/juegos/posiciones")
       .then(res => {
         setPosiciones(res.data);
         setLoading(false);
