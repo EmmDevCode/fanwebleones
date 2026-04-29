@@ -16,7 +16,7 @@ services:
       - .env
 
   frontend:
-    build: ./Frontend
+    build: ./frontend
     restart: always
 
   nginx:
