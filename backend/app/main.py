@@ -51,7 +51,12 @@ async def lifespan(app: FastAPI):
 # ==========================================
 # CONFIGURACIÓN DE FASTAPI
 # ==========================================
-app = FastAPI(title="Leones Fan API", version="1.0", lifespan=lifespan)
+app = FastAPI(
+    title="Leones Fan API",
+    version="1.0",
+    lifespan=lifespan,
+    root_path="/api"
+)
 
 # Configuración de CORS para permitir peticiones desde tu frontend en React
 app.add_middleware(
