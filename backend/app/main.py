@@ -18,7 +18,7 @@ from app.scraper.roster_scraper import extraer_roster_leones
 from app.scraper.buscador_juegos import buscar_id_juego_de_hoy
 from app.scraper.scraper_en_vivo import actualizar_pizarra_en_vivo
 
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 # ==========================================
 # EL GRAN MOTOR CENTRAL DE TAREAS (Lifespan)
