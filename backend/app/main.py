@@ -18,7 +18,7 @@ from app.scraper.roster_scraper import extraer_roster_leones
 from app.scraper.buscador_juegos import buscar_id_juego_de_hoy
 from app.scraper.scraper_en_vivo import actualizar_pizarra_en_vivo
 
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 # ==========================================
 # EL GRAN MOTOR CENTRAL DE TAREAS (Lifespan)
@@ -51,7 +51,12 @@ async def lifespan(app: FastAPI):
 # ==========================================
 # CONFIGURACIÓN DE FASTAPI
 # ==========================================
-app = FastAPI(title="Leones Fan API", version="1.0", lifespan=lifespan)
+app = FastAPI(
+    title="Leones Fan API",
+    version="1.0",
+    lifespan=lifespan,
+    root_path="/api"
+)
 
 # Configuración de CORS para permitir peticiones desde tu frontend en React
 app.add_middleware(
@@ -63,10 +68,10 @@ app.add_middleware(
 )
 
 # Conexión de Rutas
-app.include_router(juegos.router, prefix="/api/juegos", tags=["Juegos"])
-app.include_router(usuarios.router, prefix="/api/usuarios", tags=["Usuarios"])
-app.include_router(noticias.router, prefix="/api/noticias", tags=["Noticias"])
-app.include_router(equipo.router, prefix="/api/equipo", tags=["Equipo"])
+app.include_router(juegos.router, prefix="/juegos", tags=["Juegos"])
+app.include_router(usuarios.router, prefix="/usuarios", tags=["Usuarios"])
+app.include_router(noticias.router, prefix="/noticias", tags=["Noticias"])
+app.include_router(equipo.router, prefix="/equipo", tags=["Equipo"])
 
 @app.get("/")
 async def root():
