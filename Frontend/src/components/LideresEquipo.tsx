@@ -13,16 +13,31 @@ const LideresEquipo: React.FC = () => {
   const [statsActuales, setStatsActuales] = useState<any>(null);
   const [loadingModal, setLoadingModal] = useState(false);
 
-  useEffect(() => {
-    axios.get("http://127.0.0.1:8000/api/equipo/lideres")
-      .then(res => {
-        if (!res.data.error) setLideres(res.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Error cargando líderes:", err);
-        setLoading(false);
-      });
+ useEffect(() => {
+    // 1. Metemos la llamada a la API en una función
+    const cargarLideres = () => {
+      axios.get("http://127.0.0.1:8000/api/equipo/lideres")
+        .then(res => {
+          if (!res.data.error) setLideres(res.data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Error cargando líderes:", err);
+          setLoading(false);
+        });
+    };
+
+    // 2. La ejecutamos inmediatamente cuando el usuario entra a la página
+    cargarLideres();
+
+    // 3. Configuramos el cronómetro oculto (Se actualiza cada 60 segundos)
+    const intervalo = setInterval(() => {
+      console.log("⚾ Buscando nuevas estadísticas de líderes...");
+      cargarLideres();
+    }, 60000);
+
+    // 4. Limpiamos el cronómetro si el usuario cambia a otra pestaña de tu app
+    return () => clearInterval(intervalo);
   }, []);
 
   const manejarClickLider = async (id: number) => {

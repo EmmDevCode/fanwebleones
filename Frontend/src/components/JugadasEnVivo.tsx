@@ -60,37 +60,62 @@ const JugadasEnVivo: React.FC<Props> = ({ idJuego }) => {
     }, [idJuego]);
 
     return (
-        <div className="play-by-play-container">
-
-            {/* ⚾ EL ESCUCHADOR DE ANIMACIONES ESTÁ AQUÍ OCULTO */}
+        <div className="pbp-container">
             <GameAnimator
                 eventoActual={eventoAnimacion}
                 onAnimationEnd={() => setEventoAnimacion(null)}
             />
 
-            <h3 className="pbp-title">Jugada por Jugada</h3>
+            <div className="pbp-header">
+                <div className="pbp-live-pulse">
+                    <span className="pbp-pulse-dot"></span>
+                    <span>EN VIVO</span>
+                </div>
+                <h3 className="pbp-title">JUGADA POR JUGADA</h3>
+                {/* 👇 ESTOS SON LOS BOTONES DE PRUEBA 👇 */}
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+                <button onClick={() => setEventoAnimacion('homerun')} style={{ padding: '5px 10px', background: '#d32f2f', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                    Probar Jonrón
+                </button>
+                <button onClick={() => setEventoAnimacion('strikeout')} style={{ padding: '5px 10px', background: '#1976d2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                    Probar Ponche
+                </button>
+            </div>
+            {/* 👆 ================================== 👆 */}
+            </div>
 
             <div className="pbp-feed">
                 {jugadas.map((jugada) => (
                     <div key={jugada.id_jugada} className="play-card">
-
                         <div className="play-left">
-                            <img src={jugada.foto_bateador} alt="Bateador" className="play-batter-img" />
+                            <div className="play-img-wrapper">
+                                <img src={jugada.foto_bateador || 'https://ui-avatars.com/api/?name=Bateador&background=1c2b21&color=f7b112'} alt="Bateador" className="play-batter-img" />
+                            </div>
                         </div>
 
                         <div className="play-right">
-                            <div className="play-header">
-                                <span className="play-count">{jugada.bolas}-{jugada.strikes}, {jugada.outs} out</span>
+                            <div className="play-header-row">
+                                <div className="play-count-box">
+                                    <span className="play-count">{jugada.bolas}B - {jugada.strikes}S</span>
+                                    <span className="play-outs">{jugada.outs} Out{jugada.outs !== 1 && 's'}</span>
+                                </div>
                                 <span className="play-badge">{jugada.evento}</span>
                             </div>
                             <p className="play-desc">{jugada.descripcion}</p>
-                            <div className="play-score">
-                                <strong>VIS {jugada.marcador_away}</strong> - <strong>LOC {jugada.marcador_home}</strong>
+                            <div className="play-score-box">
+                                <span className="play-score-lbl">VIS</span> <span className="play-score-val">{jugada.marcador_away}</span>
+                                <span className="play-score-div"></span>
+                                <span className="play-score-val">{jugada.marcador_home}</span> <span className="play-score-lbl">LOC</span>
                             </div>
                         </div>
-
                     </div>
                 ))}
+                {jugadas.length === 0 && (
+                    <div className="pbp-empty">
+                        <div className="pbp-empty-icon">⚾</div>
+                        <p>Esperando jugadas...</p>
+                    </div>
+                )}
             </div>
         </div>
     );

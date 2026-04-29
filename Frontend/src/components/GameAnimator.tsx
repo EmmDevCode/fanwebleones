@@ -1,13 +1,13 @@
 // src/components/GameAnimator.tsx
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import './GameAnimator.css';
 
-// Definimos los tipos de animaciones que soportamos
 export type AnimationType = 'homerun' | 'strikeout' | 'win' | 'run' | null;
 
 interface Props {
     eventoActual: AnimationType;
-    onAnimationEnd: () => void; // Función para limpiar el estado cuando termine la animación
+    onAnimationEnd: () => void;
 }
 
 const GameAnimator: React.FC<Props> = ({ eventoActual, onAnimationEnd }) => {
@@ -16,51 +16,55 @@ const GameAnimator: React.FC<Props> = ({ eventoActual, onAnimationEnd }) => {
     useEffect(() => {
         if (eventoActual) {
             setIsVisible(true);
-
-            // La animación dura 4 segundos, luego desaparece
             const timer = setTimeout(() => {
                 setIsVisible(false);
-                onAnimationEnd();
+                setTimeout(onAnimationEnd, 500); // Allow fade out transition
             }, 4000);
 
             return () => clearTimeout(timer);
         }
     }, [eventoActual, onAnimationEnd]);
 
-    if (!isVisible || !eventoActual) return null;
+    if (!eventoActual) return null;
 
-    // Renderizamos diferentes estilos dependiendo del evento
-    return (
-        <div className={`animator-overlay ${eventoActual}`}>
+    return createPortal(
+        <div className={`animator-overlay ${eventoActual} ${!isVisible ? 'fade-out' : ''}`}>
             <div className="animator-content">
                 {eventoActual === 'homerun' && (
-                    <>
-                        <h1 className="glitch-text" data-text="¡HOME RUN!">¡HOME RUN!</h1>
-                        <div className="fireworks"></div>
-                    </>
+                    <div className="anim-homerun-container">
+                        <div className="hr-sparks"></div>
+                        <h1 className="hr-text" data-text="HOME RUN">HOME RUN</h1>
+                        <h2 className="hr-sub">¡VUELA LA PELOTA!</h2>
+                    </div>
                 )}
 
                 {eventoActual === 'strikeout' && (
-                    <>
-                        <h1 className="strike-text">K</h1>
-                        <p className="strike-sub">PONCHE</p>
-                    </>
+                    <div className="anim-strikeout-container">
+                        <div className="k-bg-glow"></div>
+                        <h1 className="k-text">K</h1>
+                        <p className="k-sub">PONCHE</p>
+                        <div className="k-slash"></div>
+                    </div>
                 )}
 
                 {eventoActual === 'run' && (
-                    <>
+                    <div className="anim-run-container">
+                        <div className="run-trails"></div>
                         <h1 className="run-text">¡CARRERA!</h1>
-                    </>
+                        <div className="run-plate"></div>
+                    </div>
                 )}
 
                 {eventoActual === 'win' && (
-                    <>
+                    <div className="anim-win-container">
+                        <div className="win-confetti"></div>
                         <h1 className="win-text">¡VICTORIA!</h1>
                         <p className="win-sub">LEONES DE YUCATÁN</p>
-                    </>
+                    </div>
                 )}
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

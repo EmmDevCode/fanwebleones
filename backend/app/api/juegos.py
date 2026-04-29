@@ -140,21 +140,64 @@ def obtener_posiciones():
 @router.get("/calendario")
 def obtener_calendario(db: Session = Depends(get_db)):
     try:
-        # Traemos TODOS los juegos, ordenados por fecha y hora
         juegos = db.query(Juego).options(
             joinedload(Juego.local),
             joinedload(Juego.visitante),
-            joinedload(Juego.estadio) # <-- ¡NUEVO! Conectamos la tabla estadios
+            joinedload(Juego.estadio)
         ).order_by(Juego.fecha.asc(), Juego.hora.asc()).all()
         
-        return juegos
+        calendario_completo = []
+
+        for juego in juegos:
+            juego_dict = {
+                "id_juego": juego.id_juego,
+                "fecha": juego.fecha,
+                "hora": juego.hora,
+                "estado": juego.estado,
+                "id_lmb": juego.id_lmb,
+                "local": juego.local,
+                "visitante": juego.visitante,
+                "estadio": juego.estadio,
+                "score_local": juego.score_local,
+                "score_visitante": juego.score_visitante,
+                "pitcher_visitante_probable": "Por anunciar",
+                "pitcher_local_probable": "Por anunciar",
+                "pitcher_ganador": None,
+                "pitcher_perdedor": None
+            }
+
+            if juego.id_lmb:
+                try:
+                    url = f"https://statsapi.mlb.com/api/v1.1/game/{juego.id_lmb}/feed/live"
+                    res = requests.get(url, timeout=2)
+                    
+                    if res.status_code == 200:
+                        json_data = res.json()
+                        game_data = json_data.get("gameData", {})
+                        
+                        if juego.estado != "finalizado":
+                            # Pitchers Probables para juegos futuros
+                            probables = game_data.get("probablePitchers", {})
+                            juego_dict["pitcher_visitante_probable"] = probables.get("away", {}).get("fullName", "Por anunciar")
+                            juego_dict["pitcher_local_probable"] = probables.get("home", {}).get("fullName", "Por anunciar")
+                        else:
+                            # 🏆 Decisiones para juegos terminados
+                            decisions = json_data.get("liveData", {}).get("decisions", {})
+                            juego_dict["pitcher_ganador"] = decisions.get("winner", {}).get("fullName", "N/A")
+                            juego_dict["pitcher_perdedor"] = decisions.get("loser", {}).get("fullName", "N/A")
+                except Exception:
+                    pass
+
+            calendario_completo.append(juego_dict)
+        
+        return calendario_completo
     except Exception as e:
         return {"error": f"Error interno: {str(e)}"}
 
 @router.get("/{id_juego}/jugadas")
 def obtener_jugadas_en_vivo(id_juego: int):
     # Endpoint en vivo de la MLB/LMB
-    url = f"https://statsapi.mlb.com/api/v1.1/game/{id_juego}/feed/live"
+    url = f"https://statsapi.mlb.com/api/v1.1/game/{id_juego}/feed/live?language=es"
     
     try:
         res = requests.get(url, timeout=10)

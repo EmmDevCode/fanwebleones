@@ -52,6 +52,13 @@
   gap: 8px;
 }
 
+.header-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
 .game-info-top {
   display: flex;
   justify-content: space-between;
@@ -197,6 +204,45 @@
   font-size: 0.75rem;
 }
 
+/* Recuadro Pitcher Ganador */
+.pitcher-info.pitcher-win-box {
+  background: rgba(0, 168, 89, 0.15);
+  border: 1px solid rgba(0, 168, 89, 0.4);
+  padding: 6px 12px;
+  border-radius: 8px;
+  animation: pitcher-win-pulse 2.5s infinite alternate ease-in-out;
+}
+
+.pitcher-info.pitcher-win-box .pitcher-label {
+  color: #10b981;
+  font-weight: 800;
+  text-shadow: 0 0 5px rgba(16, 185, 129, 0.4);
+}
+
+.pitcher-info.pitcher-win-box .pitcher-name {
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+}
+
+/* Recuadro Pitcher Perdedor */
+.pitcher-info.pitcher-loss-box {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+.pitcher-info.pitcher-loss-box .pitcher-label {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+.pitcher-info.pitcher-loss-box .pitcher-name {
+  color: #d4d4d8;
+}
+
+/* Estilos default para estado No Finalizado */
 .pitcher-label {
   color: #71717a;
   font-weight: 600;
@@ -210,24 +256,33 @@
   font-weight: 500;
 }
 
+@keyframes pitcher-win-pulse {
+  0% { 
+    box-shadow: 0 0 5px rgba(0, 168, 89, 0.1), inset 0 0 5px rgba(0, 168, 89, 0.1); 
+    border-color: rgba(0, 168, 89, 0.3);
+  }
+  100% { 
+    box-shadow: 0 0 15px rgba(0, 168, 89, 0.5), inset 0 0 10px rgba(0, 168, 89, 0.3); 
+    border-color: rgba(0, 168, 89, 0.7);
+  }
+}
+
 /* Badges de Estado */
 .status-badge {
   display: inline-block;
-  align-self: center;
-  padding: 6px 16px;
+  padding: 6px 14px;
   font-size: 0.65rem;
   font-weight: 800;
   border-radius: 8px;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-bottom: 12px;
+  margin: 0;
 }
 
 .status-badge.finalizado { 
   background: rgba(39, 39, 42, 0.9); 
   color: #a1a1aa; 
   border: 1px solid rgba(255, 255, 255, 0.05);
-  border-top: none;
 }
 
 .status-badge.programado { 
@@ -239,6 +294,51 @@
   background: #ef4444; 
   color: white; 
   animation: pulse-live-card 2s infinite;
+}
+
+/* Resultado W/L Badge Premium */
+.result-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  font-family: 'Teko', sans-serif;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.result-badge.win {
+  background: linear-gradient(135deg, #00A859 0%, #10b981 100%);
+  color: #ffffff;
+  border: 1px solid rgba(0, 168, 89, 0.8);
+  font-size: 1.6rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  animation: win-bounce-glow 2.5s infinite ease-in-out;
+  /* El borde dorado ayuda al tema stadium */
+  box-shadow: 0 0 10px rgba(0, 168, 89, 0.5), inset 0 1px 2px rgba(255,255,255,0.6);
+}
+
+.result-badge.loss {
+  background: linear-gradient(135deg, #27272a 0%, #3f3f46 100%);
+  color: #71717a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1.4rem;
+}
+
+
+
+@keyframes win-bounce-glow {
+  0%, 100% { 
+    transform: translateY(0) scale(1); 
+    box-shadow: 0 0 10px rgba(0, 168, 89, 0.5), inset 0 1px 2px rgba(255,255,255,0.6);
+  }
+  50% { 
+    transform: translateY(-3px) scale(1.1); 
+    box-shadow: 0 10px 20px rgba(0, 168, 89, 0.7), 0 0 20px rgba(0, 168, 89, 0.5), inset 0 1px 2px rgba(255,255,255,0.9);
+  }
 }
 
 @keyframes pulse-live-card {

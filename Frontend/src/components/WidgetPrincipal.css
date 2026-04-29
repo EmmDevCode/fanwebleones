@@ -1,6 +1,41 @@
 /* src/components/WidgetPrincipal.css */
 @import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Outfit:wght@400;600;700;800&display=swap');
 
+/* ===== DASHBOARD LAYOUT ===== */
+.wp-dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  align-items: center;
+}
+
+.wp-jugadas-card {
+  width: 100%;
+  max-width: 850px;
+}
+
+@media (min-width: 1280px) {
+  .wp-dashboard-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .wp-card, .wp-jugadas-card {
+    margin: 0;
+  }
+  .wp-card {
+    flex: 1.5;
+    max-width: 850px;
+  }
+  .wp-jugadas-card {
+    flex: 1;
+    max-width: 600px;
+  }
+}
+
 /* ===== Loading State ===== */
 .wp-loading-container {
   display: flex;
@@ -29,11 +64,16 @@
   animation: wp-spin 1s linear infinite;
 }
 
-@keyframes wp-spin { to { transform: rotate(360deg); } }
+@keyframes wp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* ===== Contenedor Principal ===== */
 .wp-card {
-  background: radial-gradient(circle at top, #1c2b21 0%, #0d120f 80%); /* Sensación de pasto/estadio */
+  background: radial-gradient(circle at top, #1c2b21 0%, #0d120f 80%);
+  /* Sensación de pasto/estadio */
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-radius: 24px;
@@ -79,7 +119,9 @@
 }
 
 @keyframes shine-border {
-  to { background-position: 200% center; }
+  to {
+    background-position: 200% center;
+  }
 }
 
 /* ===================================
@@ -119,8 +161,17 @@
 }
 
 @keyframes wp-pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.8); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
 }
 
 /* ===================================
@@ -142,8 +193,13 @@
   flex: 1;
 }
 
-.wp-team.visitor { justify-content: flex-start; }
-.wp-team.local { justify-content: flex-end; }
+.wp-team.visitor {
+  justify-content: flex-start;
+}
+
+.wp-team.local {
+  justify-content: flex-end;
+}
 
 .wp-team-logo {
   width: 80px;
@@ -223,11 +279,18 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px 40px;
-  background: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 100%);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   gap: 20px;
   position: relative;
   z-index: 5;
+}
+
+.wp-jugadas-section {
+  padding: 24px 40px;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* ===== DIAMANTE — Solo 1B, 2B, 3B ===== */
@@ -238,7 +301,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
   border-radius: 50%;
 }
 
@@ -267,13 +330,22 @@
 }
 
 /* 2B = top point (original top-left corner) */
-.wp-second-base { top: 0; left: 0; }
+.wp-second-base {
+  top: 0;
+  left: 0;
+}
 
 /* 3B = left point (original bottom-left corner) */
-.wp-third-base { bottom: 0; left: 0; }
+.wp-third-base {
+  bottom: 0;
+  left: 0;
+}
 
 /* 1B = right point (original top-right corner) */
-.wp-first-base { top: 0; right: 0; }
+.wp-first-base {
+  top: 0;
+  right: 0;
+}
 
 /* ===== LEDS DE CUENTA (B S O) ===== */
 .wp-count-board {
@@ -284,7 +356,7 @@
   padding: 16px 20px;
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .wp-count-row {
@@ -314,12 +386,26 @@
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.25s ease;
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.wp-led.ball.on { background: #32d74b; border-color: #32d74b; box-shadow: 0 0 12px rgba(50, 215, 75, 0.8); }
-.wp-led.strike.on { background: #ef4444; border-color: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.8); }
-.wp-led.out.on { background: #ff9f0a; border-color: #ff9f0a; box-shadow: 0 0 12px rgba(255, 159, 10, 0.8); }
+.wp-led.ball.on {
+  background: #32d74b;
+  border-color: #32d74b;
+  box-shadow: 0 0 12px rgba(50, 215, 75, 0.8);
+}
+
+.wp-led.strike.on {
+  background: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.8);
+}
+
+.wp-led.out.on {
+  background: #ff9f0a;
+  border-color: #ff9f0a;
+  box-shadow: 0 0 12px rgba(255, 159, 10, 0.8);
+}
 
 /* ===== DUELO (Pitcher / Batter) ===== */
 .wp-matchup {
@@ -436,12 +522,13 @@
   height: 140px;
   object-fit: contain;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 50%;
   padding: 10px;
-  border: 2px solid rgba(255,255,255,0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
   transition: transform 0.3s ease;
 }
+
 .wp-team-logo-large:hover {
   transform: scale(1.05);
 }
@@ -452,14 +539,14 @@
   font-weight: 600;
   color: #ffffff;
   line-height: 1.1;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   letter-spacing: 1px;
 }
 
 .wp-vs {
   font-size: 64px;
   line-height: 1;
-  filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
+  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
 }
 
 .wp-upcoming-footer {
@@ -475,16 +562,23 @@
   z-index: 5;
 }
 
-.wp-date { color: #d4d4d8; }
-.wp-time { color: #f7b112; text-shadow: 0 0 10px rgba(247, 177, 18, 0.4); }
+.wp-date {
+  color: #d4d4d8;
+}
+
+.wp-time {
+  color: #f7b112;
+  text-shadow: 0 0 10px rgba(247, 177, 18, 0.4);
+}
 
 /* ===================================
    RESPONSIVE (PWA Mobile)
    =================================== */
 @media (max-width: 768px) {
-  .wp-card {
+  .wp-card, .wp-jugadas-card {
     border-radius: 20px;
     max-width: 95%;
+    margin: 0 auto;
   }
 
   .wp-scoreboard-tv {
@@ -496,8 +590,13 @@
     height: 60px;
   }
 
-  .wp-team-abbr { font-size: 32px; }
-  .wp-score { font-size: 64px; }
+  .wp-team-abbr {
+    font-size: 32px;
+  }
+
+  .wp-score {
+    font-size: 64px;
+  }
 
   .wp-situational {
     flex-wrap: wrap;
@@ -506,54 +605,152 @@
     gap: 16px;
   }
 
+  .wp-jugadas-section {
+    padding: 20px;
+  }
+
   .wp-matchup {
     width: 100%;
     flex-direction: row;
   }
-  .wp-player-box { flex: 1; }
+
+  .wp-player-box {
+    flex: 1;
+  }
 
   .wp-upcoming-matchup {
     padding: 30px 10px;
   }
+
   .wp-team-logo-large {
     width: 100px;
     height: 100px;
   }
-  .wp-team-name { font-size: 28px; }
-  .wp-vs { font-size: 48px; }
+
+  .wp-team-name {
+    font-size: 28px;
+  }
+
+  .wp-vs {
+    font-size: 48px;
+  }
 }
 
 @media (max-width: 480px) {
   .wp-scoreboard-tv {
-    padding: 16px 12px;
+    padding: 16px 8px;
   }
 
-  .wp-team { gap: 8px; }
-  .wp-team-logo { width: 50px; height: 50px; }
-  .wp-team-abbr { font-size: 24px; }
-  .wp-score { font-size: 48px; }
+  .wp-team {
+    gap: 6px;
+    flex: 1;
+  }
 
-  .wp-inning-num { font-size: 36px; }
-  .wp-inning-indicator { min-width: 80px; padding: 6px 12px; }
+  .wp-team-logo {
+    width: 45px;
+    height: 45px;
+  }
 
-  .wp-situational { padding: 16px 12px; }
+  .wp-team-abbr {
+    font-size: 20px;
+  }
 
-  .wp-diamond-container { width: 80px; height: 80px; }
-  .wp-diamond { width: 45px; height: 45px; }
-  .wp-base { width: 18px; height: 18px; }
+  .wp-score {
+    font-size: 38px;
+  }
 
-  .wp-count-board { padding: 10px; }
-  .wp-count-label { font-size: 20px; }
-  .wp-led { width: 12px; height: 12px; }
+  .wp-inning-num {
+    font-size: 32px;
+  }
 
-  .wp-matchup { flex-direction: column; }
-  .wp-player-box { padding: 8px 12px; }
-  .wp-player-role { width: 26px; height: 26px; font-size: 18px; }
-  .wp-player-name.active-batter { font-size: 16px; }
+  .wp-inning-indicator {
+    min-width: 70px;
+    padding: 6px 10px;
+  }
 
-  .wp-team-logo-large { width: 80px; height: 80px; padding: 5px; }
-  .wp-team-name { font-size: 22px; }
-  .wp-vs { font-size: 36px; }
+  .wp-live-badge {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .wp-situational {
+    padding: 16px 12px;
+    gap: 12px;
+  }
+
+  .wp-diamond-container {
+    width: 70px;
+    height: 70px;
+  }
+
+  .wp-diamond {
+    width: 40px;
+    height: 40px;
+  }
+
+  .wp-base {
+    width: 16px;
+    height: 16px;
+  }
+
+  .wp-count-board {
+    padding: 10px 12px;
+  }
+
+  .wp-count-label {
+    font-size: 20px;
+    width: 18px;
+  }
+
+  .wp-led {
+    width: 12px;
+    height: 12px;
+  }
+
+  .wp-matchup {
+    flex: 0 0 100%;
+    flex-direction: row;
+    gap: 8px;
+  }
+
+  .wp-player-box {
+    flex: 1;
+    padding: 8px 10px;
+    min-width: 0;
+  }
+
+  .wp-player-role {
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+  }
+
+  .wp-player-name {
+    font-size: 14px;
+  }
+
+  .wp-player-name.active-batter {
+    font-size: 15px;
+  }
+
+  .wp-on-deck {
+    font-size: 10px;
+  }
+
+  .wp-team-logo-large {
+    width: 80px;
+    height: 80px;
+    padding: 5px;
+  }
+
+  .wp-team-name {
+    font-size: 22px;
+  }
+
+  .wp-vs {
+    font-size: 36px;
+  }
 
   .wp-upcoming-footer {
     padding: 16px;

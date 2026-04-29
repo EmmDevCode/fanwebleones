@@ -1,101 +1,318 @@
 /* src/components/JugadasEnVivo.css */
-.play-by-play-container {
-    background: #fff;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-    max-width: 600px;
-    margin: 0 auto;
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Outfit:wght@400;600;700;800&display=swap');
+
+.pbp-container {
+    background: radial-gradient(circle at top right, #1c2b21 0%, #0d120f 100%);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+    color: #fafafa;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decoración superior */
+.pbp-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #00A859, #f7b112, #ff4500, #00A859);
+    background-size: 200% auto;
+    animation: shine-border 3s linear infinite;
+}
+
+@keyframes shine-border {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.pbp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .pbp-title {
-    color: #1a1a1a;
-    font-size: 1.2rem;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 0.5rem;
+    font-family: 'Teko', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.pbp-live-pulse {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 2px;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.pbp-pulse-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 10px #ef4444;
+    animation: pbp-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pbp-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
 }
 
 .pbp-feed {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    max-height: 600px;
+    gap: 16px;
+    max-height: 500px;
     overflow-y: auto;
-    padding-right: 10px;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(247, 177, 18, 0.5) rgba(255, 255, 255, 0.05);
+}
+
+.pbp-feed::-webkit-scrollbar {
+    width: 6px;
+}
+
+.pbp-feed::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+.pbp-feed::-webkit-scrollbar-thumb {
+    background: rgba(247, 177, 18, 0.5);
+    border-radius: 10px;
 }
 
 .play-card {
     display: flex;
-    gap: 1rem;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 1rem;
-    animation: slide-down 0.4s ease-out;
-    /* Efecto de que la jugada "cae" nueva */
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 16px;
+    border-radius: 16px;
+    animation: slide-down-fade 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.play-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-2px);
+    border-color: rgba(247, 177, 18, 0.3);
 }
 
 .play-left {
     flex-shrink: 0;
 }
 
+.play-img-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, #f7b112, #ff4500);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
 .play-batter-img {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     object-fit: cover;
-    background: #f0f0f0;
-    border: 2px solid #ddd;
+    background: #1c2b21;
+    border: 2px solid #0d120f;
 }
 
 .play-right {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
-.play-header {
+.play-header-row {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
     gap: 10px;
-    margin-bottom: 5px;
+}
+
+.play-count-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .play-count {
-    font-size: 0.85rem;
-    font-weight: bold;
-    color: #555;
+    font-family: 'Teko', sans-serif;
+    font-size: 20px;
+    color: #f7b112;
+    background: rgba(247, 177, 18, 0.1);
+    padding: 2px 10px;
+    border-radius: 8px;
+    line-height: 1.2;
+    border: 1px solid rgba(247, 177, 18, 0.2);
+}
+
+.play-outs {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a1a1aa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .play-badge {
-    background: #eef2f5;
-    color: #333;
-    padding: 3px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    padding: 4px 12px;
     border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    border: 1px solid #ddd;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .play-desc {
-    font-size: 0.9rem;
-    color: #333;
-    line-height: 1.4;
-    margin: 5px 0;
+    font-size: 15px;
+    color: #d4d4d8;
+    line-height: 1.5;
+    margin: 0 0 12px 0;
+    font-weight: 400;
 }
 
-.play-score {
-    font-size: 0.8rem;
-    color: #888;
-    margin-top: 8px;
+.play-score-box {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 16px;
+    border-radius: 12px;
+    align-self: flex-start;
+    gap: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-@keyframes slide-down {
+.play-score-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: #a1a1aa;
+    letter-spacing: 1px;
+}
+
+.play-score-val {
+    font-family: 'Teko', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.play-score-div {
+    width: 4px;
+    height: 4px;
+    background: #f7b112;
+    border-radius: 50%;
+}
+
+.pbp-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: #a1a1aa;
+    text-align: center;
+}
+
+.pbp-empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+    animation: pbp-spin 10s linear infinite;
+}
+
+@keyframes pbp-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slide-down-fade {
     from {
         opacity: 0;
-        transform: translateY(-15px);
+        transform: translateY(-20px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .pbp-container {
+        padding: 16px;
+        border-radius: 20px;
+    }
+
+    .play-card {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .play-img-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+
+    .pbp-title {
+        font-size: 26px;
+    }
+
+    .play-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .play-badge {
+        align-self: flex-start;
     }
 }

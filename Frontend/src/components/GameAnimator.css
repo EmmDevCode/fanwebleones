@@ -1,148 +1,189 @@
 /* src/components/GameAnimator.css */
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@700&family=Outfit:wght@800&display=swap');
+
 .animator-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 10000;
-    /* Siempre hasta arriba */
+    z-index: 99999;
     display: flex;
     justify-content: center;
     align-items: center;
     pointer-events: none;
-    /* Permite hacer clics en la app aunque esté la animación */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+    font-family: 'Teko', sans-serif;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
-/* ⚾ ANIMACIÓN: HOME RUN */
+.animator-overlay.fade-out {
+    opacity: 0;
+}
+
+/* =========================================
+   ⚾ HOME RUN
+========================================= */
 .animator-overlay.homerun {
-    background: rgba(0, 0, 0, 0.85);
-    animation: flash-bg 0.5s infinite alternate;
-    /* Efecto estroboscópico de luces de estadio */
+    background: radial-gradient(circle, rgba(247, 177, 18, 0.3) 0%, rgba(13, 18, 15, 0.95) 80%);
+    animation: flash-bg 0.8s infinite alternate;
 }
 
-.glitch-text {
-    font-size: 8vw;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 0 20px #f7b112, 0 0 40px #f7b112;
-    text-transform: uppercase;
-    animation: scale-up 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.anim-homerun-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* ⚾ ANIMACIÓN: PONCHE (K) */
-.animator-overlay.strikeout {
-    background: rgba(139, 0, 0, 0.8);
-    /* Rojo oscuro agresivo */
-}
-
-.strike-text {
-    font-size: 15vw;
-    color: #fff;
-    font-weight: 900;
+.hr-text {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(80px, 20vw, 250px);
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 10px 40px rgba(247, 177, 18, 0.9), 0 0 80px rgba(255, 69, 0, 0.7);
     margin: 0;
-    text-shadow: 10px 10px 0px #000;
-    animation: stamp 0.3s ease-in forwards;
-    /* Cae como un sello pesado */
+    line-height: 1;
+    text-transform: uppercase;
+    animation: zoom-in-bounce 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-.strike-sub {
-    font-size: 2vw;
-    color: #fff;
-    letter-spacing: 10px;
-    margin-top: -20px;
+.hr-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(16px, 4vw, 40px);
+    color: #f7b112;
+    font-weight: 800;
+    letter-spacing: clamp(5px, 2vw, 15px);
+    margin-top: 10px;
+    text-transform: uppercase;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.9);
+    animation: slide-up-fade 0.5s 0.4s forwards;
+    opacity: 0;
 }
 
-/* ⚾ ANIMACIÓN: CARRERA */
+/* =========================================
+   ⚾ PONCHE (K)
+========================================= */
+.animator-overlay.strikeout {
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.4) 0%, rgba(13, 18, 15, 0.95) 80%);
+}
+
+.anim-strikeout-container {
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.k-text {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(150px, 40vw, 400px);
+    color: #ef4444;
+    font-weight: 700;
+    margin: 0;
+    line-height: 0.8;
+    text-shadow: 10px 10px 0px rgba(0, 0, 0, 0.9), 0 0 60px rgba(239, 68, 68, 0.6);
+    animation: stamp-heavy 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.k-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(20px, 5vw, 45px);
+    color: #ffffff;
+    letter-spacing: clamp(10px, 3vw, 30px);
+    margin-top: 30px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-shadow: 0 5px 20px rgba(0,0,0,0.8);
+    animation: flash-text 0.3s infinite alternate;
+}
+
+/* =========================================
+   ⚾ CARRERA (RUN)
+========================================= */
 .animator-overlay.run {
-    background: radial-gradient(circle, rgba(0, 0, 0, 0) 0%, rgba(247, 177, 18, 0.4) 100%);
+    background: linear-gradient(135deg, rgba(0,168,89,0.3) 0%, rgba(13, 18, 15, 0.95) 100%);
 }
 
 .run-text {
-    font-size: 6vw;
-    color: #f7b112;
-    text-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8);
-    animation: slide-in-out 3.5s ease-in-out forwards;
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(60px, 15vw, 180px);
+    color: #00A859;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0px 10px 30px rgba(0, 168, 89, 0.8);
+    animation: slide-fast 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
-/* ⚾ ANIMACIÓN: VICTORIA */
+/* =========================================
+   ⚾ VICTORIA (WIN)
+========================================= */
 .animator-overlay.win {
-    background: rgba(0, 50, 0, 0.9);
-    /* Verde triunfo */
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, rgba(13, 18, 15, 0.95) 80%);
 }
 
 .win-text {
-    font-size: 8vw;
-    color: gold;
-    animation: bounce-in 1s both;
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(60px, 15vw, 180px);
+    color: #f7b112;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 0 10px 40px rgba(247, 177, 18, 0.8), 0 0 80px rgba(255, 215, 0, 0.5);
+    animation: pop-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
+.win-sub {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(14px, 3vw, 35px);
+    color: #ffffff;
+    letter-spacing: clamp(4px, 1vw, 12px);
+    margin-top: 15px;
+    font-weight: 800;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.8);
+    animation: slide-up-fade 0.5s 0.5s forwards;
+    opacity: 0;
+}
 
-/* --- KEYFRAMES --- */
+/* =========================================
+   🎬 ANIMACIONES KEYFRAMES
+========================================= */
 @keyframes flash-bg {
-    0% {
-        background: rgba(0, 0, 0, 0.9);
-    }
-
-    100% {
-        background: rgba(0, 0, 0, 0.7);
-    }
+    0% { background: radial-gradient(circle, rgba(247, 177, 18, 0.2) 0%, rgba(13, 18, 15, 0.95) 80%); }
+    100% { background: radial-gradient(circle, rgba(247, 177, 18, 0.4) 0%, rgba(13, 18, 15, 0.95) 80%); }
 }
 
-@keyframes scale-up {
-    0% {
-        transform: scale(0.1);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+@keyframes zoom-in-bounce {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
-@keyframes stamp {
-    0% {
-        transform: scale(3) rotate(-15deg);
-        opacity: 0;
-    }
-
-    100% {
-        transform: scale(1) rotate(-15deg);
-        opacity: 1;
-    }
+@keyframes slide-up-fade {
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
 }
 
-@keyframes slide-in-out {
-    0% {
-        transform: translateX(-100vw);
-    }
-
-    15% {
-        transform: translateX(0);
-    }
-
-    85% {
-        transform: translateX(0);
-        opacity: 1;
-    }
-
-    100% {
-        transform: translateX(100vw);
-        opacity: 0;
-    }
+@keyframes stamp-heavy {
+    0% { transform: scale(3) rotate(-20deg); opacity: 0; }
+    100% { transform: scale(1) rotate(-10deg); opacity: 1; }
 }
 
-@keyframes bounce-in {
-    0% {
-        transform: scale(0);
-    }
+@keyframes flash-text {
+    0% { opacity: 1; text-shadow: 0 0 20px rgba(255,255,255,0.8); }
+    100% { opacity: 0.5; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+}
 
-    50% {
-        transform: scale(1.2);
-    }
+@keyframes slide-fast {
+    0% { transform: translateX(-150vw) skewX(-20deg); opacity: 0; }
+    20% { transform: translateX(0) skewX(-10deg); opacity: 1; }
+    80% { transform: translateX(0) skewX(-10deg); opacity: 1; }
+    100% { transform: translateX(150vw) skewX(-20deg); opacity: 0; }
+}
 
-    100% {
-        transform: scale(1);
-    }
+@keyframes pop-in {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }

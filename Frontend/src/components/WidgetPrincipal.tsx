@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './WidgetPrincipal.css';
+import JugadasEnVivo from './JugadasEnVivo';
 
 const WidgetPrincipal: React.FC = () => {
   const [datosWidget, setDatosWidget] = useState<any>(null);
@@ -90,78 +91,80 @@ const WidgetPrincipal: React.FC = () => {
     const inningNum = inningStr.replace(/[^0-9]/g, '') || "1";
 
     return (
-      <div className="wp-card wp-live">
+      <div className="wp-dashboard-layout">
+        <div className="wp-card wp-live">
+          {/* Zona Superior: Marcador Principal (Estilo TV) */}
+          <div className="wp-scoreboard-tv">
+            <div className="wp-team visitor">
+              <img src={getLogo(datos.visitante)} alt="Visitante" className="wp-team-logo" />
+              <span className="wp-team-abbr">{obtenerAbreviatura(datos.visitante?.nombre)}</span>
+              <span className="wp-score">{datos.score_visitante || 0}</span>
+            </div>
 
-        {/* Zona Superior: Marcador Principal (Estilo TV) */}
-        <div className="wp-scoreboard-tv">
-          <div className="wp-team visitor">
-            <img src={getLogo(datos.visitante)} alt="Visitante" className="wp-team-logo" />
-            {/* AQUÍ USAMOS LA FUNCIÓN PARA EL VISITANTE */}
-            <span className="wp-team-abbr">{obtenerAbreviatura(datos.visitante?.nombre)}</span>
-            <span className="wp-score">{datos.score_visitante || 0}</span>
+            <div className="wp-inning-indicator">
+              <div className="wp-inning-arrow">{esAlta ? "▲" : "▼"}</div>
+              <div className="wp-inning-num">{inningNum}</div>
+              <div className="wp-live-badge">EN VIVO</div>
+            </div>
+
+            <div className="wp-team local">
+              <span className="wp-score">{datos.score_local || 0}</span>
+              <span className="wp-team-abbr">{obtenerAbreviatura(datos.local?.nombre)}</span>
+              <img src={getLogo(datos.local)} alt="Local" className="wp-team-logo" />
+            </div>
           </div>
 
-          <div className="wp-inning-indicator">
-            <div className="wp-inning-arrow">{esAlta ? "▲" : "▼"}</div>
-            <div className="wp-inning-num">{inningNum}</div>
-            <div className="wp-live-badge">EN VIVO</div>
-          </div>
+          <div className="wp-situational">
+            {/* Diamante — Solo 1B, 2B, 3B */}
+            <div className="wp-diamond-container">
+              <div className="wp-diamond">
+                <div className={`wp-base wp-second-base ${b2 ? 'active' : ''}`}></div>
+                <div className={`wp-base wp-third-base ${b3 ? 'active' : ''}`}></div>
+                <div className={`wp-base wp-first-base ${b1 ? 'active' : ''}`}></div>
+              </div>
+            </div>
 
-          <div className="wp-team local">
-            <span className="wp-score">{datos.score_local || 0}</span>
-            {/* AQUÍ USAMOS LA FUNCIÓN PARA EL LOCAL */}
-            <span className="wp-team-abbr">{obtenerAbreviatura(datos.local?.nombre)}</span>
-            <img src={getLogo(datos.local)} alt="Local" className="wp-team-logo" />
+            {/* Cuenta LED (Bolas, Strikes, Outs) */}
+            <div className="wp-count-board">
+              <div className="wp-count-row">
+                <span className="wp-count-label">B</span>
+                <div className="wp-leds">
+                  {[1, 2, 3, 4].map(i => <div key={i} className={`wp-led ball ${i <= (datos.bolas || 0) ? 'on' : ''}`}></div>)}
+                </div>
+              </div>
+              <div className="wp-count-row">
+                <span className="wp-count-label">S</span>
+                <div className="wp-leds">
+                  {[1, 2, 3].map(i => <div key={i} className={`wp-led strike ${i <= (datos.strikes || 0) ? 'on' : ''}`}></div>)}
+                </div>
+              </div>
+              <div className="wp-count-row">
+                <span className="wp-count-label">O</span>
+                <div className="wp-leds">
+                  {[1, 2, 3].map(i => <div key={i} className={`wp-led out ${i <= (datos.outs || 0) ? 'on' : ''}`}></div>)}
+                </div>
+              </div>
+            </div>
+
+            {/* Duelo de Jugadores */}
+            <div className="wp-matchup">
+              <div className="wp-player-box">
+                <span className="wp-player-role">P</span>
+                <span className="wp-player-name">{datos.pitcher_actual || "Calentando..."}</span>
+              </div>
+              <div className="wp-player-box">
+                <span className="wp-player-role">B</span>
+                <div className="wp-batter-info">
+                  <span className="wp-player-name active-batter">{datos.bateador_actual || "En turno..."}</span>
+                  <span className="wp-on-deck">Sig: {datos.bateador_siguiente || "Siguiente..."}</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* ... (Todo lo del diamante y cuenta se queda igual) ... */}
-        <div className="wp-situational">
-          {/* Diamante — Solo 1B, 2B, 3B */}
-          <div className="wp-diamond-container">
-            <div className="wp-diamond">
-              <div className={`wp-base wp-second-base ${b2 ? 'active' : ''}`}></div>
-              <div className={`wp-base wp-third-base ${b3 ? 'active' : ''}`}></div>
-              <div className={`wp-base wp-first-base ${b1 ? 'active' : ''}`}></div>
-            </div>
-          </div>
-
-          {/* Cuenta LED (Bolas, Strikes, Outs) */}
-          <div className="wp-count-board">
-            <div className="wp-count-row">
-              <span className="wp-count-label">B</span>
-              <div className="wp-leds">
-                {[1, 2, 3, 4].map(i => <div key={i} className={`wp-led ball ${i <= (datos.bolas || 0) ? 'on' : ''}`}></div>)}
-              </div>
-            </div>
-            <div className="wp-count-row">
-              <span className="wp-count-label">S</span>
-              <div className="wp-leds">
-                {[1, 2, 3].map(i => <div key={i} className={`wp-led strike ${i <= (datos.strikes || 0) ? 'on' : ''}`}></div>)}
-              </div>
-            </div>
-            <div className="wp-count-row">
-              <span className="wp-count-label">O</span>
-              <div className="wp-leds">
-                {[1, 2, 3].map(i => <div key={i} className={`wp-led out ${i <= (datos.outs || 0) ? 'on' : ''}`}></div>)}
-              </div>
-            </div>
-          </div>
-
-          {/* Duelo de Jugadores */}
-          <div className="wp-matchup">
-            <div className="wp-player-box">
-              <span className="wp-player-role">P</span>
-              <span className="wp-player-name">{datos.pitcher_actual || "Calentando..."}</span>
-            </div>
-            <div className="wp-player-box">
-              <span className="wp-player-role">B</span>
-              <div className="wp-batter-info">
-                <span className="wp-player-name active-batter">{datos.bateador_actual || "En turno..."}</span>
-                <span className="wp-on-deck">Sig: {datos.bateador_siguiente || "Siguiente..."}</span>
-              </div>
-            </div>
-          </div>
+        <div className="wp-jugadas-card">
+          <JugadasEnVivo idJuego={datos.id_lmb} />
         </div>
       </div>
     );

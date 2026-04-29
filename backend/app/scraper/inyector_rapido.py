@@ -15,13 +15,18 @@ from app.models.database import Juego, Equipo
 # Formato: ("YYYY-MM-DD", "HH:MM", "Local", "Visitante", "ID_LMB")
 juegos_manuales = [
     # --- SEMANA 1: ABRIL ---
-    ("2026-04-27", "19:30", "Tigres de Quintana roo", "Leones de Yucatán", "846276"),
-    ("2026-04-28", "18:30", "Tigres de Quintana roo", "Leones de Yucatán", "846274"),
-    ("2026-04-29", "18:30", "Tigres de Quintana roo", "Leones de Yucatán", "846275"),
-    ("2026-05-01", "19:30", "Leones de Yucatán", "Pericos de Puebla", "846690"),
-    ("2026-05-02", "19:00", "Leones de Yucatán", "Pericos de Puebla", "846697"),
-    ("2026-05-03", "18:00", "Leones de Yucatán", "Pericos de Puebla", "846694"),
-    # Agrega el resto de tus juegos aquí abajo...
+    ("2026-05-05", "19:30", "Olmecas de tabasco", "Leones de Yucatán", "846789"),
+    ("2026-05-06", "19:30", "Olmecas de tabasco", "Leones de Yucatán", "846788"),
+    ("2026-05-07", "19:30", "Olmecas de tabasco", "Leones de Yucatán", "846786"),
+    ("2026-05-08", "19:30", "Leones de Yucatán", "Bravos de leon", "846686"),
+    ("2026-05-09", "19:30", "Leones de Yucatán", "Bravos de leon", "846689"),
+    ("2026-05-10", "18:00", "Leones de Yucatán", "Bravos de leon", "846683"),
+    ("2026-05-12", "19:00", "Piratas de campeche", "Leones de Yucatán", "846549"),
+    ("2026-05-13", "19:00", "Piratas de campeche", "Leones de Yucatán", "846550"),
+    ("2026-05-14", "19:00", "Piratas de campeche", "Leones de Yucatán", "846545"),
+    ("2026-05-15", "19:30", "Leones de Yucatán", "Guerreros de oaxaca", "846682"),
+    ("2026-05-16", "19:00", "Leones de Yucatán", "Guerreros de oaxaca", "846681"),
+    ("2026-05-17", "18:00", "Leones de Yucatán", "Guerreros de oaxaca", "846684"),
 ]
 
 def inyectar_juegos():
