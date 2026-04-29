@@ -68,10 +68,10 @@ app.add_middleware(
 )
 
 # Conexión de Rutas
-app.include_router(juegos.router, prefix="/api/juegos", tags=["Juegos"])
-app.include_router(usuarios.router, prefix="/api/usuarios", tags=["Usuarios"])
-app.include_router(noticias.router, prefix="/api/noticias", tags=["Noticias"])
-app.include_router(equipo.router, prefix="/api/equipo", tags=["Equipo"])
+app.include_router(juegos.router, prefix="/juegos", tags=["Juegos"])
+app.include_router(usuarios.router, prefix="/usuarios", tags=["Usuarios"])
+app.include_router(noticias.router, prefix="/noticias", tags=["Noticias"])
+app.include_router(equipo.router, prefix="/equipo", tags=["Equipo"])
 
 @app.get("/")
 async def root():
