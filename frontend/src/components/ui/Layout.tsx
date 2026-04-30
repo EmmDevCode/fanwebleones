@@ -1,6 +1,8 @@
 import React from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Home, Calendar, Newspaper, User, Users } from 'lucide-react';
+import CookieBanner from './CookieBanner';
+import InstallPrompt from './InstallPrompt';
 import './Layout.css';
 
 const Layout: React.FC = () => {
@@ -21,6 +23,10 @@ const Layout: React.FC = () => {
       <main className="main-content">
         <Outlet />
       </main>
+
+      {/* 2. Colocamos el banner aquí */}
+      <CookieBanner />
+      <InstallPrompt /> {/* <-- 2. Colocarlo aquí */}
 
       {/* Barra de Navegación Inferior */}
       <nav className="bottom-navbar">

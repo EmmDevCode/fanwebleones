@@ -72,16 +72,6 @@ const JugadasEnVivo: React.FC<Props> = ({ idJuego }) => {
                     <span>EN VIVO</span>
                 </div>
                 <h3 className="pbp-title">JUGADA POR JUGADA</h3>
-                {/* 👇 ESTOS SON LOS BOTONES DE PRUEBA 👇 */}
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
-                <button onClick={() => setEventoAnimacion('homerun')} style={{ padding: '5px 10px', background: '#d32f2f', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                    Probar Jonrón
-                </button>
-                <button onClick={() => setEventoAnimacion('strikeout')} style={{ padding: '5px 10px', background: '#1976d2', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                    Probar Ponche
-                </button>
-            </div>
-            {/* 👆 ================================== 👆 */}
             </div>
 
             <div className="pbp-feed">
