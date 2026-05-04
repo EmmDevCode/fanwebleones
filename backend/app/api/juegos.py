@@ -226,9 +226,84 @@ def obtener_jugadas_en_vivo(id_juego: int):
                 }
                 jugadas_limpias.append(jugada)
                 
+                
         # Las volteamos para que la más reciente salga hasta arriba
         jugadas_limpias.reverse()
         return {"jugadas": jugadas_limpias}
         
+    except Exception as e:
+        return {"error": str(e)}
+    
+@router.get("/{id_lmb}/gamecast")
+def obtener_gamecast_en_vivo(id_lmb: int):
+    url = f"https://statsapi.mlb.com/api/v1.1/game/{id_lmb}/feed/live?language=es"
+    
+    try:
+        res = requests.get(url, timeout=5)
+        if res.status_code != 200:
+            return {"error": "API no disponible"}
+            
+        data = res.json()
+        liveData = data.get("liveData", {})
+        currentPlay = liveData.get("plays", {}).get("currentPlay", {})
+        matchup = currentPlay.get("matchup", {})
+        linescore = liveData.get("linescore", {})
+        
+        # 1. IDs y Fotos
+        batter_id = matchup.get("batter", {}).get("id")
+        pitcher_id = matchup.get("pitcher", {}).get("id")
+        foto_base = "https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_213,q_auto:best/v1/people/{}/headshot/67/current"
+        
+        # 2. Historial de Pitcheos (Para el Radar)
+        pitches = []
+        for event in currentPlay.get("playEvents", []):
+            if event.get("isPitch"):
+                pitch_data = event.get("pitchData", {})
+                coords = pitch_data.get("coordinates", {})
+                pitches.append({
+                    "numero": event.get("pitchNumber"),
+                    "descripcion": event.get("details", {}).get("description"),
+                    "es_strike": event.get("details", {}).get("isStrike", False),
+                    "x": coords.get("pX"), # Radar 3D (Playoffs / MLB)
+                    "y": coords.get("pZ"), 
+                    "gx": coords.get("x"), # Gameday Clásico (LMB Regular)
+                    "gy": coords.get("y"), 
+                    "sz_top": pitch_data.get("strikeZoneTop", 3.5),
+                    "sz_bottom": pitch_data.get("strikeZoneBottom", 1.5)
+                })
+
+        gameData = data.get("gameData", {})
+
+        return {
+            "pizarra": {
+                "outs": currentPlay.get("count", {}).get("outs", 0),
+                "bolas": currentPlay.get("count", {}).get("balls", 0),
+                "strikes": currentPlay.get("count", {}).get("strikes", 0),
+                "RHE": {
+                    "local": linescore.get("teams", {}).get("home", {}),
+                    "visitante": linescore.get("teams", {}).get("away", {})
+                },
+                # Aquí están los nombres completos, usando la variable correcta
+                "equipos": {
+                    "local": gameData.get("teams", {}).get("home", {}).get("teamName", "LOC").upper(),
+                    "visitante": gameData.get("teams", {}).get("away", {}).get("teamName", "VIS").upper()
+                },
+                # Extraemos los innings para que el Linescore pueda dibujarlos
+                "innings": linescore.get("innings", [])
+            },
+            "enfrentamiento": {
+                "bateador": {
+                    "nombre": matchup.get("batter", {}).get("fullName"),
+                    "foto": foto_base.format(batter_id),
+                    "avg": liveData.get("boxscore", {}).get("teams", {}).get("away" if linescore.get("isTopInning") else "home", {}).get("players", {}).get(f"ID{batter_id}", {}).get("seasonStats", {}).get("batting", {}).get("avg", ".000")
+                },
+                "pitcher": {
+                    "nombre": matchup.get("pitcher", {}).get("fullName"),
+                    "foto": foto_base.format(pitcher_id),
+                    "pitches": currentPlay.get("pitchIndex", []).__len__()
+                }
+            },
+            "pitcheos": pitches
+        }
     except Exception as e:
         return {"error": str(e)}

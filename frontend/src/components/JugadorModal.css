@@ -23,7 +23,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(247, 177, 18, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(0, 168, 89, 0.1);
   animation: slideUpModal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -39,7 +39,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #f7b112, #ff4500);
+  background: linear-gradient(90deg, #00A859, #10b981);
   z-index: 10;
 }
 
@@ -76,7 +76,7 @@
   display: flex;
   align-items: center;
   padding: 2.5rem 1.5rem 2rem;
-  background: radial-gradient(circle at top right, rgba(247, 177, 18, 0.15) 0%, transparent 60%);
+  background: radial-gradient(circle at top right, rgba(0, 168, 89, 0.15) 0%, transparent 60%);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -93,16 +93,16 @@
   object-fit: cover;
   border: 3px solid transparent;
   background: linear-gradient(#121212, #121212) padding-box,
-              linear-gradient(135deg, #f7b112, #ff4500) border-box;
-  box-shadow: 0 8px 24px rgba(247, 177, 18, 0.2);
+              linear-gradient(135deg, #00A859, #10b981) border-box;
+  box-shadow: 0 8px 24px rgba(0, 168, 89, 0.2);
 }
 
 .player-number-badge {
   position: absolute;
   bottom: 0;
   right: 0;
-  background: linear-gradient(135deg, #f7b112, #ff8c00);
-  color: #000;
+  background: linear-gradient(135deg, #00A859, #059669);
+  color: #fff;
   font-weight: 900;
   font-size: 0.9rem;
   padding: 4px 8px;
@@ -182,7 +182,7 @@
 
 .stats-header h3 {
   margin: 0;
-  color: #f7b112;
+  color: #00A859;
   font-size: 1.1rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -193,13 +193,13 @@
 }
 
 .season-badge {
-  background: rgba(247, 177, 18, 0.1);
-  color: #f7b112;
+  background: rgba(0, 168, 89, 0.1);
+  color: #10b981;
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 0.75rem;
   font-weight: 800;
-  border: 1px solid rgba(247, 177, 18, 0.3);
+  border: 1px solid rgba(0, 168, 89, 0.3);
 }
 
 .stats-grid {
@@ -237,7 +237,7 @@
 .stat-item:hover {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(247, 177, 18, 0.3);
+  border-color: rgba(0, 168, 89, 0.3);
 }
 
 .stat-item:hover::after {

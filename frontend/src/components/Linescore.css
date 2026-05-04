@@ -1,0 +1,198 @@
+.linescore-container {
+  background: radial-gradient(circle at top, #1c2b21 0%, #0d120f 80%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.25rem;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+  font-family: 'Outfit', sans-serif;
+}
+
+.linescore-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00A859, #f7b112, #ff4500, #00A859);
+  background-size: 200% auto;
+  animation: shine-border 3s linear infinite;
+  z-index: 10;
+}
+
+@keyframes shine-border {
+  to { background-position: 200% center; }
+}
+
+.linescore-loading {
+  color: #a1a1aa;
+  text-align: center;
+  padding: 2rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.linescore-loading::after {
+  content: '';
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0, 168, 89, 0.2);
+  border-top-color: #00A859;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.ls-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+  position: relative;
+  z-index: 5;
+}
+
+.ls-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.95rem;
+  min-width: max-content; /* Asegura que la tabla no se aplaste en móvil */
+}
+
+.ls-table th, 
+.ls-table td {
+  text-align: center;
+  padding: 0.8rem 0.6rem;
+  color: #e4e4e7;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.ls-table th {
+  color: #a1a1aa; 
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ls-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.ls-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.ls-table .col-team {
+  text-align: left;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  background: #0d120f; /* Color sólido oscuro para no sobreponer con el scroll */
+  z-index: 2;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.ls-table th.col-team {
+  background: #0d120f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ls-table .col-r,
+.ls-table .col-h,
+.ls-table .col-e {
+  font-weight: 700;
+}
+
+.ls-table .col-divider {
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.ls-table th.col-divider {
+  background-color: transparent;
+}
+
+.team-visitante { 
+  color: #d4d4d8; 
+}
+
+.team-local { 
+  color: #00A859; 
+  text-shadow: 0 0 12px rgba(0, 168, 89, 0.4);
+}
+
+.ls-table .val-r { 
+  color: #fff; 
+  font-weight: 800;
+  font-size: 1.1rem;
+} 
+
+.ls-table .col-h { color: #a1a1aa; }
+.ls-table .col-e { color: #71717a; }
+
+.empty-inning { 
+  color: #3f3f46;
+  font-weight: 400;
+} 
+
+/* Scrollbar estilizado para extra innings */
+.ls-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.ls-wrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+.ls-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(0, 168, 89, 0.4);
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+.ls-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 168, 89, 0.8);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .linescore-container {
+    padding: 1rem 0; /* Padding 0 lateral para que la tabla use todo el ancho posible */
+    border-radius: 20px;
+  }
+  
+  .ls-table {
+    font-size: 0.85rem;
+  }
+  
+  .ls-table .col-team {
+    padding-left: 0.75rem;
+    padding-right: 0.5rem;
+  }
+
+  .ls-table th, 
+  .ls-table td {
+    padding: 0.6rem 0.4rem; /* Reducir padding interno para que entren los 9 innings sin tanto scroll */
+  }
+
+  .ls-wrapper::-webkit-scrollbar-track {
+    margin: 0 0.5rem;
+  }
+}

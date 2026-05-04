@@ -1,0 +1,511 @@
+@import url('https://fonts.googleapis.com/css2?family=Teko:wght@400;600;700&family=Outfit:wght@400;600;700;800&display=swap');
+
+/* --- VARIABLES Y TOKENS --- */
+:root {
+  --gc-glass-border: rgba(255, 255, 255, 0.08); 
+  --gc-glow-green: rgba(0, 168, 89, 0.5); 
+  --gc-glow-blue: rgba(59, 130, 246, 0.4);
+  --gc-glow-yellow: rgba(234, 179, 8, 0.4);
+  --gc-glow-strike: rgba(239, 68, 68, 0.7);
+  --gc-glow-ball: rgba(0, 168, 89, 0.8);
+  --gc-leones-green: #00A859;
+}
+
+.gamecast-container,
+.gamecast-container * {
+  box-sizing: border-box;
+}
+
+.gamecast-container {
+  /* Fondo Verde Estadio (mismo de WidgetPrincipal) */
+  background: radial-gradient(circle at top, #1c2b21 0%, #0d120f 80%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  color: white;
+  padding: 1rem; 
+  border-radius: 20px; /* Consistente con las otras tarjetas */
+  border: 1px solid var(--gc-glass-border);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  font-family: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin: 0.5rem auto 0 auto;
+}
+
+/* Luces de estadio sutiles arriba */
+.gamecast-container::after {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 150px;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Línea verde decorativa estilo WidgetPrincipal */
+.gamecast-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #00A859, transparent);
+  z-index: 10;
+}
+
+.gamecast-loading {
+  color: #a1a1aa;
+  text-align: center;
+  padding: 2rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  animation: pulse-soft 2s infinite ease-in-out;
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* --- SECCIÓN MATCHUP (FOTOS Y VS) --- */
+.gc-matchup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 1rem; 
+  margin-bottom: 1rem; 
+  position: relative;
+  z-index: 1;
+}
+
+.gc-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.gc-avatar {
+  width: 4.8rem; 
+  height: 4.8rem; 
+  border-radius: 50%;
+  border: 2px solid;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.gc-avatar:hover {
+  transform: scale(1.05);
+}
+
+/* Nota: Estilos para las clases hardcodeadas en TSX */
+.border-blue {
+  border-color: rgba(255, 255, 255, 0.3); /* Neutralizado en lugar del azul feo */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.border-yellow {
+  border-color: #f7b112; /* Dorado Leones */
+  box-shadow: 0 4px 10px rgba(247, 177, 18, 0.3);
+}
+
+.gc-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.gc-name {
+  font-weight: 700;
+  font-size: 0.95rem; 
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: #fafafa;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+}
+
+.gc-badge {
+  font-family: 'Teko', sans-serif;
+  font-size: 14px;
+  padding: 2px 10px;
+  border-radius: 6px;
+  margin-top: 0.4rem;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-transform: uppercase;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  line-height: 1.2;
+}
+
+.badge-blue { background: rgba(255, 255, 255, 0.1); color: #d4d4d8; border: 1px solid rgba(255,255,255,0.2); }
+.badge-yellow { background: rgba(247, 177, 18, 0.15); color: #f7b112; border: 1px solid rgba(247, 177, 18, 0.3); }
+
+.gc-stats {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  color: #a1a1aa;
+}
+
+.gc-stats span {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.gc-stats strong { 
+  color: #f7b112; 
+  font-size: 0.8rem;
+  font-family: 'Teko', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* --- SECCIÓN VS INDICADOR --- */
+.gc-vs-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0.5;
+  gap: 4px;
+}
+
+.gc-vs {
+  font-family: 'Teko', sans-serif;
+  font-size: 3rem; 
+  font-weight: 700;
+  color: #d4d4d8;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
+}
+
+.gc-live-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.6rem;
+  background: rgba(239, 68, 68, 0.15); 
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #ef4444;
+  margin-top: 0;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.2);
+}
+
+.live-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  background-color: #ef4444;
+  border-radius: 50%;
+  animation: gc-pulse 1.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
+  box-shadow: 0 0 6px #ef4444;
+}
+
+@keyframes gc-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* --- ZONA DE RADAR Y CONTEO --- */
+.gc-radar-section {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Esto lo centra perfecto vertical y horizontalmente */
+  gap: 2rem; 
+  position: relative;
+  z-index: 1;
+}
+
+.gc-radar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  /* ⚾ AQUÍ ESTÁ LA MAGIA: 1.2rem arriba/abajo, y 4rem izquierda/derecha */
+  padding: 1.2rem 4rem; 
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gc-radar-container h4 {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #a1a1aa;
+  margin: 0 0 1rem 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.gc-strike-zone {
+  position: relative;
+  width: 9.5rem;  
+  height: 12.5rem; 
+  border: 2px solid rgba(255, 255, 255, 0.4); /* Borde principal más visible */
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.7) 100%);
+  border-radius: 4px;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+}
+
+.gc-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  pointer-events: none; /* Para que no estorbe si pasas el mouse por las bolas */
+}
+
+.gc-grid-cell {
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.gc-pitch-dot {
+  position: absolute;
+  width: 1.6rem; /* Aumentado de 1.3rem */
+  height: 1.6rem; /* Aumentado de 1.3rem */
+  margin-left: -0.8rem; /* Siempre debe ser la mitad del width */
+  margin-top: -0.8rem;  /* Siempre debe ser la mitad del height */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem; /* Número un poco más grande */
+  font-weight: 800;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+  cursor: help;
+  transition: transform 0.2s ease, z-index 0.2s;
+  z-index: 5;
+}
+
+.gc-pitch-dot:hover {
+  transform: scale(1.3);
+  z-index: 10;
+}
+
+.strike-dot { 
+  background: radial-gradient(circle at 30% 30%, #ef4444, #991b1b); 
+  border: 1px solid #fca5a5;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.7), 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.ball-dot { 
+  background: radial-gradient(circle at 30% 30%, #32d74b, #15803d); 
+  border: 1px solid #86efac;
+  box-shadow: 0 0 10px rgba(50, 215, 75, 0.7), 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* --- CONTEO DE BOLAS Y STRIKES --- */
+.gc-count-board {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 1.2rem 1.5rem; 
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+  flex: 1;
+  max-width: 180px; 
+}
+
+.gc-count-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.gc-count-row span {
+  font-family: 'Teko', sans-serif;
+  font-weight: 600;
+  color: #a1a1aa;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.gc-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.count-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dot-ball { 
+  background: #32d74b;
+  border-color: #32d74b;
+  box-shadow: 0 0 10px rgba(50, 215, 75, 0.8);
+}
+
+.dot-strike, .dot-out { 
+  background: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.8);
+}
+
+/* --- RESPONSIVIDAD (PWA / MOBILE FIRST) --- */
+@media (max-width: 768px) {
+  .gamecast-container {
+    padding: 12px;
+    border-radius: 16px;
+    margin-top: 0;
+  }
+
+  /* Mantener Pitcher - VS - Batter en una sola línea */
+  .gc-matchup {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 4px;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+
+  .gc-player {
+    flex: 1;
+    min-width: 0; /* Permite que el texto largo se trunque */
+  }
+
+  .gc-avatar {
+    width: 3.8rem;
+    height: 3.8rem;
+    margin-bottom: 6px;
+    padding: 2px;
+  }
+
+  .gc-name {
+    font-size: 0.8rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+  }
+
+  .gc-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .gc-stats span {
+    padding: 2px 6px;
+  }
+
+  .gc-stats strong {
+    font-size: 0.75rem;
+  }
+
+  .gc-vs-section {
+    flex: 0 0 auto;
+    gap: 2px;
+    margin: 0 8px;
+  }
+
+  .gc-vs {
+    font-size: 2.2rem;
+  }
+
+  .gc-live-badge {
+    padding: 2px 6px;
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+    margin-top: 0;
+  }
+
+  /* Apilar Radar y luego Conteo horizontalmente */
+  .gc-radar-section {
+    flex-direction: column; 
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .gc-radar-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+  }
+
+  .gc-strike-zone {
+    width: 8.5rem; /* Ligeramente más grande también en móvil */
+    height: 11.5rem;
+  }
+
+  .gc-count-board {
+    width: 100%;
+    max-width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .gc-count-row {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .gc-count-row span {
+    font-size: 1.1rem;
+  }
+  
+  .gc-dots {
+    gap: 6px;
+  }
+  
+  .count-dot {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .gc-avatar {
+    width: 3.2rem;
+    height: 3.2rem;
+  }
+  
+  .gc-vs {
+    font-size: 1.8rem;
+  }
+  
+  .gc-count-board {
+    padding: 10px 4px;
+  }
+}
