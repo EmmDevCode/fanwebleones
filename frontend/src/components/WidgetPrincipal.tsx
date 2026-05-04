@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './WidgetPrincipal.css';
-import JugadasEnVivo from './JugadasEnVivo';
+
 
 const WidgetPrincipal: React.FC = () => {
   const [datosWidget, setDatosWidget] = useState<any>(null);
@@ -161,10 +161,6 @@ const WidgetPrincipal: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="wp-jugadas-card">
-          <JugadasEnVivo idJuego={datos.id_lmb} />
         </div>
       </div>
     );

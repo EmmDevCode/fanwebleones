@@ -1,0 +1,263 @@
+/* RadioBoton.css */
+
+.radio-container {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 160px); /* Más arriba de la barra de navegación inferior en móvil */
+  right: 20px;
+  z-index: 9998;
+  pointer-events: none; /* Permite clics a través del espacio vacío */
+}
+
+.radio-controls-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  pointer-events: auto;
+}
+
+/* Tarjeta de Información (Info Message Card) */
+.radio-info-card {
+  position: absolute;
+  /* En móviles se posiciona arriba del botón para evitar desbordamiento horizontal */
+  right: 0;
+  bottom: calc(100% + 15px);
+  width: calc(100vw - 40px);
+  max-width: 320px;
+  background: rgba(20, 24, 32, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px) scale(0.95);
+  transform-origin: right bottom;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto;
+}
+
+.radio-info-card.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.radio-info-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.7rem;
+  line-height: 1.4;
+  text-align: left;
+  font-weight: 300;
+  padding-right: 20px; /* Espacio para el botón de cerrar */
+}
+
+.radio-info-card strong {
+  color: #FF8C00;
+  font-weight: 600;
+}
+
+.close-info-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-info-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Botón para mostrar información (Info toggle) */
+.radio-info-toggle {
+  background: rgba(20, 24, 32, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.radio-info-toggle:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: scale(1.05);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Botón Principal (Main Button) */
+.radio-main-btn {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FF8C00, #E65100);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(255, 140, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+}
+
+.radio-main-btn:hover {
+  transform: scale(1.05) translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255, 140, 0, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.radio-main-btn:active {
+  transform: scale(0.95);
+}
+
+.radio-main-btn.playing {
+  background: linear-gradient(135deg, #e53935, #c62828);
+  box-shadow: 0 8px 25px rgba(229, 57, 53, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Efecto de resplandor (Glowing effect) */
+.radio-glow-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: inherit;
+  filter: blur(12px);
+  opacity: 0.6;
+  z-index: -1;
+  transition: all 0.3s ease;
+  animation: pulseGlow 2.5s infinite alternate;
+}
+
+.radio-main-btn.playing .radio-glow-effect {
+  filter: blur(16px);
+  opacity: 0.8;
+  animation: none; /* La animación de reproducción maneja el visual */
+}
+
+/* Badge (Estado "En Vivo" o "Al Aire") */
+.radio-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #111;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.radio-main-btn.playing .radio-badge {
+  background: #fff;
+  color: #d32f2f;
+  border-color: #fff;
+  box-shadow: 0 4px 15px rgba(211, 47, 47, 0.4);
+}
+
+/* Icono Normal */
+.radio-icon {
+  animation: floatIcon 3s infinite ease-in-out;
+}
+
+/* Animación de Ecualizador (Reproducción) */
+.equalizer-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 24px;
+}
+
+.eq-bar {
+  width: 4px;
+  background-color: white;
+  border-radius: 2px;
+  animation: equalize 0.6s infinite ease-in-out alternate;
+}
+
+.eq-bar:nth-child(1) { height: 14px; animation-delay: 0.1s; }
+.eq-bar:nth-child(2) { height: 24px; animation-delay: 0.3s; }
+.eq-bar:nth-child(3) { height: 16px; animation-delay: 0.0s; }
+.eq-bar:nth-child(4) { height: 20px; animation-delay: 0.4s; }
+
+/* Animaciones Clave */
+@keyframes pulseGlow {
+  0% { transform: scale(1); opacity: 0.4; }
+  100% { transform: scale(1.2); opacity: 0.7; }
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes equalize {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+/* Responsividad y PWA */
+@media (min-width: 768px) {
+  .radio-container {
+    bottom: 40px;
+    right: 40px;
+  }
+  
+  .radio-main-btn {
+    width: 68px;
+    height: 68px;
+  }
+  
+  .radio-info-card {
+    /* En escritorio se coloca a la izquierda porque hay suficiente espacio */
+    right: calc(100% + 15px);
+    bottom: 0;
+    width: 320px;
+    padding: 18px 20px;
+    transform: translateX(20px) scale(0.95);
+  }
+
+  .radio-info-card.visible {
+    transform: translateX(0) scale(1);
+  }
+  
+  .radio-info-card p {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+}

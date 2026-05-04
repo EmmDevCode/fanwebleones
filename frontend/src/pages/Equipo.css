@@ -21,7 +21,7 @@
   transform: translateX(-50%);
   width: 100vw;
   height: 60vh;
-  background: radial-gradient(ellipse at top, rgba(0, 168, 89, 0.15) 0%, rgba(247, 177, 18, 0.05) 40%, rgba(0,0,0,0) 70%);
+  background: radial-gradient(ellipse at top, rgba(0, 168, 89, 0.15) 0%, rgba(16, 185, 129, 0.05) 40%, rgba(0,0,0,0) 70%);
   z-index: 0;
   filter: blur(60px);
   pointer-events: none;
@@ -43,7 +43,7 @@
   width: 50px;
   height: 50px;
   border: 4px solid rgba(0, 168, 89, 0.2);
-  border-top-color: #f7b112; /* Leones yellow */
+  border-top-color: #00A859; /* Leones green */
   border-radius: 50%;
   animation: eq-spin 1s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
 }
@@ -141,11 +141,11 @@
 }
 
 .filtro-btn.activo {
-  background: linear-gradient(135deg, #f7b112 0%, #d97706 100%);
-  color: #09090b;
-  border-color: #f7b112;
+  background: linear-gradient(135deg, #00A859 0%, #059669 100%);
+  color: #fff;
+  border-color: #00A859;
   font-weight: 800;
-  box-shadow: 0 4px 15px rgba(247, 177, 18, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 168, 89, 0.4);
 }
 
 /* Contenido Roster */
@@ -227,12 +227,12 @@
 .jugador-card:hover, .jugador-card:active {
   transform: translateY(-6px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  border-color: rgba(247, 177, 18, 0.4);
+  border-color: rgba(0, 168, 89, 0.4);
   background: rgba(39, 39, 42, 0.9);
 }
 
 .jugador-card:hover::before, .jugador-card:active::before {
-  background: linear-gradient(90deg, transparent, #f7b112, transparent);
+  background: linear-gradient(90deg, transparent, #00A859, transparent);
 }
 
 .jugador-foto-wrapper {
